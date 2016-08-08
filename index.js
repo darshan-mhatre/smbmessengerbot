@@ -3,6 +3,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
+
+//Example POST method invocation 
+var Client = require('node-rest-client').Client; 
+var client = new Client();
+
 const app = express()
 
 app.set('port', (process.env.PORT || 5000))
@@ -34,6 +39,19 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
+
+            // set content-type header and data as json in args parameter 
+            var args = {
+                headers: { "Content-Type": "application/json" }
+            };
+
+            client.post("http://remote.site/rest/xml/method", args, function (data, response) {
+                // parsed response body as js object 
+                console.log(data);
+                // raw response 
+                console.log(response);
+            });
+
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
