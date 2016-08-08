@@ -42,10 +42,11 @@ app.post('/webhook/', function (req, res) {
 
             // set content-type header and data as json in args parameter 
             var args = {
+                data: { "BookCategoryID":1 },
                 headers: { "Content-Type": "application/json" }
             };
 
-            client.post("http://remote.site/rest/xml/method", args, function (data, response) {
+            client.post("http://52.3.172.40/facebookbot/api/Book/GetBooks", args, function (data, response) {
                 // parsed response body as js object 
                 console.log(data);
                 // raw response 
