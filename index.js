@@ -37,16 +37,18 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
+        let senderName = event.sender.name
+        let crTime = event.created_time
         if (event.message && event.message.text) {
             let text = event.message.text
 
             // set content-type header and data as json in args parameter 
             var args = {
-                data: { "BookCategoryID":1 },
+                data: { "SenderId": sender, "SenderName":senderName, "MsgReceived":text, "Created_Time":crTime },
                 headers: { "Content-Type": "application/json" }
             };
 
-            client.post("http://52.3.172.40/facebookbot/api/Book/GetBooks", args, function (data, response) {
+            client.post("http://52.3.172.40/facebookbot/api/Book/SaveDetails", args, function (data, response) {
                 // parsed response body as js object 
                 console.log(data);
                 // raw response 
