@@ -88,6 +88,7 @@ app.post('/webhook/', function (req, res) {
 
 
 function sendTextMessage(sender, text) {
+    console.log("abc " + text);
     console.log(text);
 
     let messageData = { text: text }
