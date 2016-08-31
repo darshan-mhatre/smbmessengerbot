@@ -46,14 +46,28 @@ app.post('/webhook/', function (req, res) {
                     };
 
             client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                        console.log("data = " + data);
+                        console.log(data.message);
                         // parsed response body as js object 
-                        console.log(data);
+                        //console.log(data);
                         // raw response 
-                        console.log(response);
-                        bookCategory = response;
-                        console.log("started message " + bookCategory.message);
-                        sendTextMessage(sender, bookCategory.message); 
-                    });
+                        //console.log(response);
+                        //bookCategory = response;
+                        console.log("started message " + data.message);
+                        sendTextMessage(sender, data.message);
+            });
+
+            //client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+            //    console.log("response = " + response);
+            //    console.log(response.message);
+            //    // parsed response body as js object 
+            //    //console.log(data);
+            //    // raw response 
+            //    //console.log(response);
+            //    //bookCategory = response;
+            //    console.log("started message " + response.message);
+            //    sendTextMessage(sender, response.message);
+            //});
      }
    // }
     //for (let i = 0; i < messaging_events.length; i++) {
