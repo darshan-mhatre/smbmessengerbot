@@ -33,32 +33,32 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging;
-    console.log(messaging_events);
-    for (let i = 0; i < messaging_events.length; i++) {
-        let event = req.body.entry[0].messaging[i]
-        //let sender = event.sender.id
-        //let senderName = event.sender.name
-        //let crTime = event.created_time
-        if (event.message && event.message.text) {
-            let text = event.message.text
+    console.log("test");
+    //for (let i = 0; i < messaging_events.length; i++) {
+    //    let event = req.body.entry[0].messaging[i]
+    //    //let sender = event.sender.id
+    //    //let senderName = event.sender.name
+    //    //let crTime = event.created_time
+    //    if (event.message && event.message.text) {
+    //        let text = event.message.text
 
-            // set content-type header and data as json in args parameter 
-            //var args = {
-            //    data: { "SenderId": sender, "SenderName":senderName, "MsgReceived":text, "Created_Time":crTime },
-            //    headers: { "Content-Type": "application/json" }
-            //};
+    //        // set content-type header and data as json in args parameter 
+    //        //var args = {
+    //        //    data: { "SenderId": sender, "SenderName":senderName, "MsgReceived":text, "Created_Time":crTime },
+    //        //    headers: { "Content-Type": "application/json" }
+    //        //};
 
-            //client.post("http://52.3.172.40/facebookbot/api/Book/SaveDetails", args, function (data, response) {
-            //    // parsed response body as js object 
-            //    console.log(data);
-            //    // raw response 
-            //    console.log(response);
-            //});
+    //        //client.post("http://52.3.172.40/facebookbot/api/Book/SaveDetails", args, function (data, response) {
+    //        //    // parsed response body as js object 
+    //        //    console.log(data);
+    //        //    // raw response 
+    //        //    console.log(response);
+    //        //});
 
-            console.log("asasd");
-            sendTextMessage(sender, "Text received, echo: ")
-        }
-    }
+    //        console.log("asasd");
+    //        sendTextMessage(sender, "Text received, echo: ")
+    //    }
+    //}
     res.sendStatus(200)
 })
 
