@@ -51,8 +51,8 @@ app.post('/webhook/', function (req, res) {
                         // raw response 
                         console.log(response);
                         bookCategory = response;
-                        console.log("started");
-                        sendTextMessage(sender, bookCategory.message);
+                        console.log("started message " + bookCategory.message);
+                        sendTextMessage(sender, bookCategory.message); 
                     });
      }
    // }
