@@ -33,12 +33,13 @@ app.get('/webhook/', function (req, res) {
 
 
 app.post('/webhook/', function (req, res) {
-    let messaging_events = req.body.entry[0].messaging
+    let messaging_events = req.body.entry[0].messaging;
+
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
-        let sender = event.from.name.text //event.sender.id
-        let senderName = event.sender.name
-        let crTime = event.created_time
+        //let sender = event.sender.id
+        //let senderName = event.sender.name
+        //let crTime = event.created_time
         if (event.message && event.message.text) {
             let text = event.message.text
 
@@ -55,7 +56,7 @@ app.post('/webhook/', function (req, res) {
             //    console.log(response);
             //});
 
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendTextMessage(sender, "Text received, echo: ")
         }
     }
     res.sendStatus(200)
