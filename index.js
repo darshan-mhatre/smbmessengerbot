@@ -37,6 +37,7 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id
+    console.log("if message " + event.message.text);
         if (event.message.text === '#book') {
          //   let text = event.message.text
             console.log("if message "+event.message.text);
