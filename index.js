@@ -88,17 +88,30 @@ app.post('/webhook/', function (req, res) {
 
 
 function sendTextMessage(sender, text) {
-    console.log("abc " + text);
-    console.log(text);
-
-    let messageData = { text: text }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: text
+            message: {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "button",
+                        "text": "What do you want to do next?",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "Business",
+                            "payload": "1"
+                        }, {
+                            "type": "postback",
+                            "title": "Sports",
+                            "payload": "2"
+                        }]
+                    }
+                }
+            }
         }
     }, function (error, response, body) {
         if (error) {
