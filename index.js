@@ -10,7 +10,7 @@ var client = new Client();
 
 const app = express()
 app.set('port', (process.env.PORT || 5000))
-
+var bookCategory;
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
 
@@ -49,6 +49,7 @@ app.post('/webhook/', function (req, res) {
                         console.log(data);
                         // raw response 
                         console.log(response);
+                        bookCategory=response;
                     });
       //  }
    // }
@@ -91,27 +92,28 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "button",
-                        "text": "What do you want to do next?",
-                        "buttons": [
-                        {
-                            "type": "web_url",
-                            "url": "https://petersapparel.parseapp.com",
-                            "title": "Show Website"
-                        },
-                        {
-                            "type": "postback",
-                            "title": "Start Chatting",
-                            "payload": "USER_DEFINED_PAYLOAD"
-                        }
-                        ]
-                    }
-                }
-            }
+            message: bookCategory
+                //{
+            //    "attachment": {
+            //        "type": "template",
+            //        "payload": {
+            //            "template_type": "button",
+            //            "text": "What do you want to do next?",
+            //            "buttons": [
+            //            {
+            //                "type": "web_url",
+            //                "url": "https://petersapparel.parseapp.com",
+            //                "title": "Show Website"
+            //            },
+            //            {
+            //                "type": "postback",
+            //                "title": "Start Chatting",
+            //                "payload": "USER_DEFINED_PAYLOAD"
+            //            }
+            //            ]
+            //        }
+            //    }
+            //}
         }
     }, function (error, response, body) {
         if (error) {
