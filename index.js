@@ -9,7 +9,6 @@ var Client = require('node-rest-client').Client;
 var client = new Client();
 
 const app = express()
-var bookCategory;
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -34,7 +33,7 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging;
-
+    console.log(messaging_events);
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         //let sender = event.sender.id
@@ -56,6 +55,7 @@ app.post('/webhook/', function (req, res) {
             //    console.log(response);
             //});
 
+            console.log("asasd");
             sendTextMessage(sender, "Text received, echo: ")
         }
     }
