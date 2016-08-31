@@ -88,8 +88,9 @@ app.post('/webhook/', function (req, res) {
 
 
 function sendTextMessage(sender, text) {
-    console.log("started func");
-    console.log("started text"+text);
+
+    console.log("started func sender" +sender);
+    console.log("started text" + text);
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
