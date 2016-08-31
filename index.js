@@ -37,7 +37,7 @@ app.post('/webhook/', function (req, res) {
    // for (let i = 0; i < messaging_events.length; i++) {
         //let event = req.body.entry[0].messaging[i]
         //if (event.message && event.message.text) {
-            let text = event.message.text
+         //   let text = event.message.text
 
             var args = {
                         data: { },
@@ -79,6 +79,9 @@ app.post('/webhook/', function (req, res) {
     //}
     res.sendStatus(200)
 })
+
+
+
 
 function sendTextMessage(sender, text) {
     let messageData = { text: text }
