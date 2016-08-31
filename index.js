@@ -33,7 +33,7 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging;
-    console.log("test");
+    console.log("test - " + messaging_events);
     for (let i = 0; i < messaging_events.length; i++) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id
@@ -51,7 +51,8 @@ app.post('/webhook/', function (req, res) {
                         // raw response 
                         console.log(response);
                         bookCategory = response;
-                        sendTextMessage(sender, bookCategory)
+                        console.log("started");
+                        sendTextMessage(sender, bookCategory.message);
                     });
      }
    // }
@@ -94,28 +95,27 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: messageData
-                //{
-            //    "attachment": {
-            //        "type": "template",
-            //        "payload": {
-            //            "template_type": "button",
-            //            "text": "What do you want to do next?",
-            //            "buttons": [
-            //            {
-            //                "type": "web_url",
-            //                "url": "https://petersapparel.parseapp.com",
-            //                "title": "Show Website"
-            //            },
-            //            {
-            //                "type": "postback",
-            //                "title": "Start Chatting",
-            //                "payload": "USER_DEFINED_PAYLOAD"
-            //            }
-            //            ]
-            //        }
-            //    }
-            //}
+            message: {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "button",
+                        "text": "What do you want to do next?",
+                        "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": "https://petersapparel.parseapp.com",
+                            "title": "Show Website"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Start Chatting",
+                            "payload": "USER_DEFINED_PAYLOAD"
+                        }
+                        ]
+                    }
+                }
+            }
         }
     }, function (error, response, body) {
         if (error) {
