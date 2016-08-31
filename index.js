@@ -9,7 +9,7 @@ var Client = require('node-rest-client').Client;
 var client = new Client();
 
 const app = express()
-
+var bookCategory;
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -36,7 +36,7 @@ app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
-        let sender = 'abcname' //event.sender.id
+        let sender = event.from.name.text //event.sender.id
         let senderName = event.sender.name
         let crTime = event.created_time
         if (event.message && event.message.text) {
@@ -62,6 +62,9 @@ app.post('/webhook/', function (req, res) {
 })
 
 function sendTextMessage(sender, text) {
+    client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+        bookCategory = response;
+    });
     let messageData = { text:text }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -69,27 +72,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: {
-                        "attachment":{
-                        "type":"template",
-                        "payload":{
-                            "template_type":"button",
-                            "text":"What do you want to do next?",
-                            "buttons":[
-                            {
-                                "type":"web_url",
-                                "url":"https://petersapparel.parseapp.com",
-                                "title":"Show Website"
-                            },
-                            {
-                                "type":"postback",
-                                "title":"Start Chatting",
-                                "payload":"USER_DEFINED_PAYLOAD"
-                            }
-                            ]
-                        }
-                        }
-            }
+            message: bookCategory
         }
     }, function(error, response, body) {
         if (error) {
