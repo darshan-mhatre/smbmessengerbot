@@ -34,8 +34,9 @@ app.get('/webhook/', function (req, res) {
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging;
     console.log("test");
-   // for (let i = 0; i < messaging_events.length; i++) {
-        //let event = req.body.entry[0].messaging[i]
+    for (let i = 0; i < messaging_events.length; i++) {
+    let event = req.body.entry[0].messaging[i]
+    let sender = event.sender.id
         //if (event.message && event.message.text) {
          //   let text = event.message.text
 
@@ -49,9 +50,10 @@ app.post('/webhook/', function (req, res) {
                         console.log(data);
                         // raw response 
                         console.log(response);
-                        bookCategory=response;
+                        bookCategory = response;
+                        sendTextMessage(sender, bookCategory)
                     });
-      //  }
+      }
    // }
     //for (let i = 0; i < messaging_events.length; i++) {
     //    let event = req.body.entry[0].messaging[i]
@@ -92,7 +94,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: bookCategory
+            message: messageData
                 //{
             //    "attachment": {
             //        "type": "template",
