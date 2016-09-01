@@ -37,9 +37,12 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id
+    console.log("before if condition = ");
     if (event.message && event.message.text) {
+        console.log("if condition = ");
         let text = event.message.text
         if (text === '#book') {
+            console.log("#book condition = ");
             //   let text = event.message.text
 
             var args = {
@@ -70,6 +73,9 @@ app.post('/webhook/', function (req, res) {
             //    console.log("started message " + response.message);
             //    sendTextMessage(sender, response.message);
             //});
+        }
+        else {
+            console.log("else condition = ");
         }
     }
     }
