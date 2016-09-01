@@ -42,7 +42,7 @@ app.post('/webhook/', function (req, res) {
         console.log("if condition = ");
         let text = event.message.text
        // if (text === '#book') {
-            console.log("#book condition = ");
+        console.log("#book condition = " + text);
             //   let text = event.message.text
 
             var args = {
