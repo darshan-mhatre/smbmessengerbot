@@ -61,7 +61,7 @@ app.post('/webhook/', function (req, res) {
         }
         else
         {
-            console.log("else condition = " + event.message);
+            console.log("else condition = " + messaging_events);
         }
     }
     res.sendStatus(200)
