@@ -37,24 +37,26 @@ app.post('/webhook/', function (req, res) {
     for (let i = 0; i < messaging_events.length; i++) {
     let event = req.body.entry[0].messaging[i]
     let sender = event.sender.id
-        if (event.message.text === '#book') {
-         //   let text = event.message.text
+    if (event.message && event.message.text) {
+        let text = event.message.text
+        if (text === '#book') {
+            //   let text = event.message.text
 
             var args = {
-                        data: { },
-                        headers: { "Content-Type": "application/json" }
-                    };
+                data: {},
+                headers: { "Content-Type": "application/json" }
+            };
 
             client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                        console.log("data = " + data);
-                        console.log(data.message);
-                        // parsed response body as js object 
-                        //console.log(data);
-                        // raw response 
-                        //console.log(response);
-                        //bookCategory = response;
-                        console.log("started message " + data.message);
-                        sendTextMessage(sender, data.message);
+                console.log("data = " + data);
+                console.log(data.message);
+                // parsed response body as js object 
+                //console.log(data);
+                // raw response 
+                //console.log(response);
+                //bookCategory = response;
+                console.log("started message " + data.message);
+                sendTextMessage(sender, data.message);
             });
 
             //client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
@@ -68,6 +70,7 @@ app.post('/webhook/', function (req, res) {
             //    console.log("started message " + response.message);
             //    sendTextMessage(sender, response.message);
             //});
+        }
     }
     }
     //for (let i = 0; i < messaging_events.length; i++) {
