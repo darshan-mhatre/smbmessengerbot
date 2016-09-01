@@ -42,69 +42,26 @@ app.post('/webhook/', function (req, res) {
             console.log("in if = " + event.message.text);
             let text = event.message.text
 
+            // set content-type header and data as json in args parameter 
+          
             var args = {
                 data: {},
                 headers: { "Content-Type": "application/json" }
             };
 
             client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                console.log("data = " + data);
-                console.log(data.message);
                 // parsed response body as js object 
-                //console.log(data);
+                console.log(data);
                 // raw response 
-                //console.log(response);
-                //bookCategory = response;
-                console.log("started message " + data.message);
+                console.log(response);
                 sendTextMessage(sender, data.message);
             });
 
-            //client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-            //    console.log("response = " + response);
-            //    console.log(response.message);
-            //    // parsed response body as js object 
-            //    //console.log(data);
-            //    // raw response 
-            //    //console.log(response);
-            //    //bookCategory = response;
-            //    console.log("started message " + response.message);
-            //    sendTextMessage(sender, response.message);
-            //});
-        //}
-        //else {
-        //    console.log("else condition = ");
-        //}
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+        }
     }
-    }
-    //for (let i = 0; i < messaging_events.length; i++) {
-    //    let event = req.body.entry[0].messaging[i]
-    //    //let sender = event.sender.id
-    //    //let senderName = event.sender.name
-    //    //let crTime = event.created_time
-    //    if (event.message && event.message.text) {
-    //        let text = event.message.text
-
-    //        // set content-type header and data as json in args parameter 
-    //        //var args = {
-    //        //    data: { "SenderId": sender, "SenderName":senderName, "MsgReceived":text, "Created_Time":crTime },
-    //        //    headers: { "Content-Type": "application/json" }
-    //        //};
-
-    //        //client.post("http://52.3.172.40/facebookbot/api/Book/SaveDetails", args, function (data, response) {
-    //        //    // parsed response body as js object 
-    //        //    console.log(data);
-    //        //    // raw response 
-    //        //    console.log(response);
-    //        //});
-
-    //        console.log("asasd");
-    //        sendTextMessage(sender, "Text received, echo: ")
-    //    }
-    //}
     res.sendStatus(200)
 })
-
-
 
 
 function sendTextMessage(sender, text) {
