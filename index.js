@@ -43,7 +43,7 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text
 
             // set content-type header and data as json in args parameter 
-          
+
             var args = {
                 data: {},
                 headers: { "Content-Type": "application/json" }
@@ -57,7 +57,11 @@ app.post('/webhook/', function (req, res) {
                 sendTextMessage(sender, data.message);
             });
 
-           // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+        }
+        else
+        {
+            console.log("else condition = " + event.message);
         }
     }
     res.sendStatus(200)
