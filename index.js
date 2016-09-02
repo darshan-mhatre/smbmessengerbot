@@ -55,7 +55,7 @@ app.post('/webhook/', function (req, res) {
                             // parsed response body as js object 
                             console.log(data)
                             // raw response 
-                            console.log("data.message = "+data.message)
+                            console.log("data.message = ",data.message)
                             sendTextMessage(sender, data.message)
                             sendTextMessageOnResponseAPI(sender, "Postback received: " + text.substring(0, 200))
                         });
