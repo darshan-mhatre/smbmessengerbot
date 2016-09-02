@@ -5,6 +5,10 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 
+//Example POST method invocation 
+var Client = require('node-rest-client').Client;
+var client = new Client();
+
 app.set('port', (process.env.PORT || 5000))
 
 // parse application/x-www-form-urlencoded
@@ -42,7 +46,21 @@ app.post('/webhook/', function (req, res) {
         }
         if (event.postback) {
             let text = JSON.stringify(event.postback)
-            sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
+            var args = {
+                            data: {},
+                            headers: { "Content-Type": "application/json" }
+                        };
+
+                        client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                            // parsed response body as js object 
+                            console.log(data)
+                            // raw response 
+                            console.log(response)
+                            sendTextMessage(sender, data.message)
+                        });
+
+                        // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            //sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
             continue
         }
     }
