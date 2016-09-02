@@ -57,7 +57,7 @@ app.post('/webhook/', function (req, res) {
                             // raw response 
                             console.log("data.message = ",data.message)
                             sendTextMessage(sender, data.message)
-                            sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
+                            //sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -75,14 +75,14 @@ const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3E
 
 function sendTextMessage(sender, text) {
     //let messageData = { text: text }
-    let messageData = { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } } }, { "type": "postback", "title": "Historical", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } } }, { "type": "postback", "title": "Novel", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } } }] } } }
+   // let messageData = { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } } }, { "type": "postback", "title": "Historical", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } } }, { "type": "postback", "title": "Novel", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } } }] } } }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: messageData, //text
+            message: text, //text
         }
     }, function (error, response, body) {
         if (error) {
