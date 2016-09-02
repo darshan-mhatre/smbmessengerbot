@@ -57,7 +57,7 @@ app.post('/webhook/', function (req, res) {
                             // raw response 
                             console.log("data.message = ",data.message)
                             sendTextMessage(sender, data.message)
-                            //sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
+                            sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
