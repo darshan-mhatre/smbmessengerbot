@@ -144,7 +144,7 @@ function sendTextMessageOnResponseAPI(sender, text) {
         // parsed response body as js object 
         console.log(data)
         // raw response 
-        console.log("data.message books = ", data.books[0].BookName)
+        console.log("data.message books = ", data.books)
        // sendTextMessage(sender, data.message)
         sendTextMessageOnResponse(sender, books)
     });
