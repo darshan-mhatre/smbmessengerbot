@@ -57,7 +57,7 @@ app.post('/webhook/', function (req, res) {
                             // raw response 
                             console.log("data.message = ",data.message)
                             sendTextMessage(sender, data.message)
-                          //  sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
+                          sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -116,36 +116,36 @@ function sendTextMessageOnResponse(sender, text) {
 function sendTextMessageOnResponseAPI(sender, text) {
     console.log('API response: ', text)
     console.log('API responseAPI: ', text.payl)
-    let messageData = { text: text }
+  //  let messageData = { "BookCategoryID": "1" }
 
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
-        method: 'POST',
-        json: {
-            recipient: { id: sender },
-            message: messageData, //messageData
-        }
-    }, function (error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-    //var args = {
-    //    data: { "BookCategoryID": "3" },
-    //    headers: { "Content-Type": "application/json" }
-    //};
+    //request({
+    //    url: 'https://graph.facebook.com/v2.6/me/messages',
+    //    qs: { access_token: token },
+    //    method: 'POST',
+    //    json: {
+    //        recipient: { id: sender },
+    //        message: messageData, //messageData
+    //    }
+    //}, function (error, response, body) {
+    //    if (error) {
+    //        console.log('Error sending messages: ', error)
+    //    } else if (response.body.error) {
+    //        console.log('Error: ', response.body.error)
+    //    }
+    //})
+    var args = {
+        data: { "BookCategoryID": "3" },
+        headers: { "Content-Type": "application/json" }
+    };
 
-    //client.post("http://52.3.172.40/facebookbot/api/Book/GetBooks", args, function (data, response) {
-    //    // parsed response body as js object 
-    //    console.log(data)
-    //    // raw response 
-    //    console.log("data.message books = ", data.books)
-    //   // sendTextMessage(sender, data.message)
-    //    sendTextMessageOnResponse(sender, data.books)
-    //});
+    client.post("http://52.3.172.40/facebookbot/api/Book/GetBooks", args, function (data, response) {
+        // parsed response body as js object 
+        console.log(data)
+        // raw response 
+        console.log("data.message books = ", data.books)
+       // sendTextMessage(sender, data.message)
+        sendTextMessageOnResponse(sender, data.books)
+    });
 
    
 }
