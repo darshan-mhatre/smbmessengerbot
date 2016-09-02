@@ -55,7 +55,7 @@ app.post('/webhook/', function (req, res) {
                             // parsed response body as js object 
                             console.log(data)
                             // raw response 
-                            console.log(response)
+                            console.log("data.message = "+data.message)
                             sendTextMessage(sender, data.message)
                         });
 
@@ -73,7 +73,7 @@ app.post('/webhook/', function (req, res) {
 const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
 
 function sendTextMessage(sender, text) {
-    let messageData = { text: text }
+    //let messageData = { text: text }
 
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -81,7 +81,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: messageData,
+            message: text, //messageData
         }
     }, function (error, response, body) {
         if (error) {
