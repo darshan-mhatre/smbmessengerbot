@@ -75,35 +75,7 @@ const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3E
 
 function sendTextMessage(sender, text) {
     //let messageData = { text: text }
-    let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "First card",
-                    "subtitle": "Element #1 of an hscroll",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Element #1",
-                        "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } }
-                    }, {
-                        "type": "postback",
-                        "title": "Element #1 2",
-                        "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } }
-                    }],
-                }, {
-                    "title": "Second card",
-                    "subtitle": "Element #2 of an hscroll",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Element #2 ",
-                        "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } }
-                    }],
-                }]
-            }
-        }
-    }
+    let messageData = { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } } }, { "type": "postback", "title": "Historical", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } } }, { "type": "postback", "title": "Novel", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } } }] } } }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
