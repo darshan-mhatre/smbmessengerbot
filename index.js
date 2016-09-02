@@ -115,24 +115,39 @@ function sendTextMessageOnResponse(sender, text) {
 
 function sendTextMessageOnResponseAPI(sender, text) {
     console.log('API response: ', text)
-    console.log('API responseAPI: ', text.api)
-    let messageData = { text: text }
+    console.log('API responseAPI: ', text.payl)
 
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
-        method: 'POST',
-        json: {
-            recipient: { id: sender },
-            message: messageData, //messageData
-        }
-    }, function (error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
+    var args = {
+        data: { "BookCategoryID": "3" },
+        headers: { "Content-Type": "application/json" }
+    };
+
+    client.post("http://52.3.172.40/facebookbot/api/Book/GetBooks", args, function (data, response) {
+        // parsed response body as js object 
+        console.log(data)
+        // raw response 
+        console.log("data.message books = ", data.books)
+       // sendTextMessage(sender, data.message)
+        sendTextMessageOnResponse(sender, data.books)
+    });
+
+    //let messageData = { text: text }
+
+    //request({
+    //    url: 'https://graph.facebook.com/v2.6/me/messages',
+    //    qs: { access_token: token },
+    //    method: 'POST',
+    //    json: {
+    //        recipient: { id: sender },
+    //        message: messageData, //messageData
+    //    }
+    //}, function (error, response, body) {
+    //    if (error) {
+    //        console.log('Error sending messages: ', error)
+    //    } else if (response.body.error) {
+    //        console.log('Error: ', response.body.error)
+    //    }
+    //})
 }
 
 function sendGenericMessage(sender) {
