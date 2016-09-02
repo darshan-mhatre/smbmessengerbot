@@ -56,7 +56,7 @@ app.post('/webhook/', function (req, res) {
                             console.log(data)
                             // raw response 
                             console.log("data.message = "+data.message)
-                            sendTextMessage(sender, data.message)
+                            sendButtonMessage(sender, data.message)
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -72,7 +72,7 @@ app.post('/webhook/', function (req, res) {
 // const token = process.env.PAGE_ACCESS_TOKEN
 const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
 
-function sendTextMessage(sender, text) {
+function sendButtonMessage(sender, text) {
     //let messageData = { text: text }
 
     request({
@@ -82,6 +82,28 @@ function sendTextMessage(sender, text) {
         json: {
             recipient: { id: sender },
             message: text, //messageData
+        }
+    }, function (error, response, body) {
+        sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+    
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+function sendTextMessage(sender, text) {
+    let messageData = { text: text }
+
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: token },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: messageData, 
         }
     }, function (error, response, body) {
         if (error) {
