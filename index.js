@@ -33,13 +33,13 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging;
-    console.log("before for = " + messaging_events);
+    console.log("before for = " + messaging_events)
     for (let i = 0; i < messaging_events.length; i++) {
-        console.log("in for = ");
+        console.log("in for = ")
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         if (event.message && event.message.text) {
-            console.log("in if = " + event.message.text);
+            console.log("in if = " + event.message.text)
             let text = event.message.text
 
             // set content-type header and data as json in args parameter 
@@ -51,10 +51,10 @@ app.post('/webhook/', function (req, res) {
 
             client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
                 // parsed response body as js object 
-                console.log(data);
+                console.log(data)
                 // raw response 
-                console.log(response);
-                sendTextMessage(sender, data.message);
+                console.log(response)
+                sendTextMessage(sender, data.message)
             });
 
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -62,7 +62,7 @@ app.post('/webhook/', function (req, res) {
         else
         {
 
-            console.log("else condition = " + messaging_events);
+            console.log("else condition = " + messaging_events)
         }
     }
     res.sendStatus(200)
@@ -71,8 +71,8 @@ app.post('/webhook/', function (req, res) {
 
 function sendTextMessage(sender, text) {
 
-    console.log("started func sender" +sender);
-    console.log("started text" + text);
+    console.log("started func sender" +sender)
+    console.log("started text" + text)
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
