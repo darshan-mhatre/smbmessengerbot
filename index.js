@@ -85,19 +85,19 @@ function sendTextMessage(sender, text) {
                     "subtitle": "Element #1 of an hscroll",
                     "buttons": [{
                         "type": "postback",
-                        "title": "Postback",
+                        "title": "Element #1",
                         "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } }
                     }, {
                         "type": "postback",
-                        "title": "Postback",
-                        "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } },
+                        "title": "Element #1 2",
+                        "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } }
                     }],
                 }, {
                     "title": "Second card",
                     "subtitle": "Element #2 of an hscroll",
                     "buttons": [{
                         "type": "postback",
-                        "title": "Postback",
+                        "title": "Element #2 ",
                         "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } }
                     }],
                 }]
@@ -110,7 +110,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: text, //messageData
+            message: messageData, //text
         }
     }, function (error, response, body) {
         if (error) {
