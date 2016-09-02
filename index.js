@@ -61,6 +61,7 @@ app.post('/webhook/', function (req, res) {
         }
         else
         {
+
             console.log("else condition = " + messaging_events);
         }
     }
