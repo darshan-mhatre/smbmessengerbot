@@ -57,6 +57,7 @@ app.post('/webhook/', function (req, res) {
                             // raw response 
                             console.log("data.message = "+data.message)
                             sendTextMessage(sender, data.message)
+                            sendTextMessageOnResponse(sender, "Postback received: " + text.substring(0, 200))
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -82,6 +83,26 @@ function sendTextMessage(sender, text) {
         json: {
             recipient: { id: sender },
             message: text, //messageData
+        }
+    }, function (error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+function sendTextMessageOnResponse(sender, text) {
+    let messageData = { text: text }
+
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: token },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: messageData, //messageData
         }
     }, function (error, response, body) {
         if (error) {
