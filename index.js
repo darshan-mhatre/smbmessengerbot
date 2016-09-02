@@ -117,7 +117,7 @@ function sendTextMessageOnResponse(sender, text) {
 
 function sendTextMessageOnResponseAPI(sender, text) {
     console.log('API response: ', text)
-    console.log('API responseAPI: ', text.payl)
+    
   //  let messageData = { "BookCategoryID": "1" }
 
     //request({
@@ -145,8 +145,10 @@ function sendTextMessageOnResponseAPI(sender, text) {
         console.log(data)
         // raw response 
         console.log("data.message books = ", data.books)
+        let books = JSON.stringify(data)
+        console.log("books =", books)
        // sendTextMessage(sender, data.message)
-        sendTextMessageOnResponse(sender, data.books)
+        sendTextMessageOnResponse(sender, books)
     });
 
    
