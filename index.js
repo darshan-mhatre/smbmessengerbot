@@ -32,81 +32,68 @@ app.get('/webhook/', function (req, res) {
 
 
 app.post('/webhook/', function (req, res) {
-    let requ = req
-    console.log("req = " + requ)
-    let bodyu  = req.body
-    console.log("body = " + bodyu)
-    let entrys = req.body.entry[0]
-    console.log("entry = " + entrys)
     let messaging_events = req.body.entry[0].messaging
-    console.log("before for = " + messaging_events)
     for (let i = 0; i < messaging_events.length; i++) {
-        console.log("in for = ")
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         if (event.message && event.message.text) {
-            console.log("in if = " + event.message.text)
             let text = event.message.text
-
-            // set content-type header and data as json in args parameter 
-
-            var args = {
-                data: {},
-                headers: { "Content-Type": "application/json" }
-            };
-
-            client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                // parsed response body as js object 
-                console.log(data)
-                // raw response 
-                console.log(response)
-                sendTextMessage(sender, data.message)
-            });
-
-            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-        }
-        else
-        {
-
-            console.log("else condition = " + messaging_events)
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200)
+
+    //let requ = req
+    //console.log("req = " + requ)
+    //let bodyu  = req.body
+    //console.log("body = " + bodyu)
+    //let entrys = req.body.entry[0]
+    //console.log("entry = " + entrys)
+    //let messaging_events = req.body.entry[0].messaging
+    //console.log("before for = " + messaging_events)
+    //for (let i = 0; i < messaging_events.length; i++) {
+    //    console.log("in for = ")
+    //    let event = req.body.entry[0].messaging[i]
+    //    let sender = event.sender.id
+    //    if (event.message && event.message.text) {
+    //        console.log("in if = " + event.message.text)
+    //        let text = event.message.text
+
+    //        // set content-type header and data as json in args parameter 
+
+    //        var args = {
+    //            data: {},
+    //            headers: { "Content-Type": "application/json" }
+    //        };
+
+    //        client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+    //            // parsed response body as js object 
+    //            console.log(data)
+    //            // raw response 
+    //            console.log(response)
+    //            sendTextMessage(sender, data.message)
+    //        });
+
+    //        // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+    //    }
+    //    else
+    //    {
+
+    //        console.log("else condition = " + messaging_events)
+    //    }
+    //}
+    //res.sendStatus(200)
 })
 
-
 function sendTextMessage(sender, text) {
-
-    console.log("started func sender" +sender)
-    console.log("started text" + text)
+    let messageData = { text: text }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: text
-        //{
-            //    "attachment": {
-            //        "type": "template",
-            //        "payload": {
-            //            "template_type": "button",
-            //            "text": "What do you want to do next?",
-            //            "buttons": [
-            //            {
-            //                "type": "web_url",
-            //                "url": "https://petersapparel.parseapp.com",
-            //                "title": "Show Website"
-            //            },
-            //            {
-            //                "type": "postback",
-            //                "title": "Start Chatting",
-            //                "payload": "USER_DEFINED_PAYLOAD"
-            //            }
-            //            ]
-            //        }
-            //    }
-            //}
+            message: messageData,
         }
     }, function (error, response, body) {
         if (error) {
@@ -116,6 +103,49 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+
+
+//function sendTextMessage(sender, text) {
+
+//    console.log("started func sender" +sender)
+//    console.log("started text" + text)
+//    request({
+//        url: 'https://graph.facebook.com/v2.6/me/messages',
+//        qs: { access_token: token },
+//        method: 'POST',
+//        json: {
+//            recipient: { id: sender },
+//            message: text
+//        //{
+//            //    "attachment": {
+//            //        "type": "template",
+//            //        "payload": {
+//            //            "template_type": "button",
+//            //            "text": "What do you want to do next?",
+//            //            "buttons": [
+//            //            {
+//            //                "type": "web_url",
+//            //                "url": "https://petersapparel.parseapp.com",
+//            //                "title": "Show Website"
+//            //            },
+//            //            {
+//            //                "type": "postback",
+//            //                "title": "Start Chatting",
+//            //                "payload": "USER_DEFINED_PAYLOAD"
+//            //            }
+//            //            ]
+//            //        }
+//            //    }
+//            //}
+//        }
+//    }, function (error, response, body) {
+//        if (error) {
+//            console.log('Error sending messages: ', error)
+//        } else if (response.body.error) {
+//            console.log('Error: ', response.body.error)
+//        }
+//    })
+//}
 
 //function sendTextMessage(sender, text) {
 
