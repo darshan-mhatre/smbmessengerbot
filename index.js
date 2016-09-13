@@ -58,13 +58,13 @@ app.post('/webhook/', function (req, res) {
                 client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
                     // parsed response body as js object
                     console.log("data.message = ", data.message)
-                    if (text === "Postback") {
+                    if (text === 'Postback') {
                         sendTextMessageOnResponse(sender, "Ordered Successfully")
                     }
                     else
                     {
-                    sendTextMessage(sender, data.message) //Creates category buttons
-                    sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+                        sendTextMessage(sender, data.message) //Creates category buttons
+                        sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
                     }
 
                 });
