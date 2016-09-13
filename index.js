@@ -136,7 +136,7 @@ function sendTextMessageOnResponseAPI(sender, text) {
     //    }
     //})
     var args = {
-        data: { "BookCategoryID": "3" },
+        data: { "BookCategoryID": "2" },
         headers: { "Content-Type": "application/json" }
     };
 
