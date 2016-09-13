@@ -149,7 +149,8 @@ function sendTextMessageOnResponseAPI(sender, text) {
         console.log("data.message books = ", data.books)
        
        // sendTextMessage(sender, data.message)
-        sendTextMessageOnResponse(sender, data.books)
+        //sendTextMessageOnResponse(sender, data.books)
+        sendTextMessage(sender, data.books)
     });
 
    
