@@ -151,12 +151,34 @@ function sendTextMessageOnResponseAPI(sender, text) {
        // sendTextMessage(sender, data.message)
         //sendTextMessageOnResponse(sender, data.books)
         //sendTextMessage(sender, '{ "text": "This is my text" }')
-        sendGenericMessage(sender)
+        sendGenericMessageForBook(sender, data.message)
     });
 
    
 }
-
+function sendGenericMessageForBook(sender,textObj) {
+//var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
+    delete textObj.attachment.payload["text"];
+    console.log('text delete ', textObj)
+    delete textObj.attachment.payload["buttons"];
+    console.log('buttons delete ', textObj)
+    let messageData = textObj
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: token },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: messageData,
+        }
+    }, function (error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
 function sendGenericMessage(sender) {
     var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
     delete myObj.attachment.payload["text"];
