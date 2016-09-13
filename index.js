@@ -48,6 +48,7 @@ app.post('/webhook/', function (req, res) {
         }
         if (event.postback) {
             let text = JSON.stringify(event.postback)
+            var txtype = event.postback;
             console.log("JSON stringify = ", text)
            
                 var args = {
@@ -58,15 +59,15 @@ app.post('/webhook/', function (req, res) {
                 client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
                     // parsed response body as js object
                     console.log("data.message = ", data.message)
-                    if (text.payload == 'Payload for first element in a generic bubble') {
-                        console.log("if postback", text)
+                    if (txtype.payload == 'Payload for first element in a generic bubble') {
+                        console.log("if postback", txtype)
                         sendTextMessageOnResponse(sender, "Order Conferm")
                     }
                     else
                     {
-                        console.log("else postback ", text)
+                        console.log("else postback ", txtype)
                     }
-                    console.log("data.text = ", text.payload)
+                    console.log("data.text = ", txtype.payload)
                     sendTextMessage(sender, data.message) //Creates category buttons
                     sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
                     
