@@ -41,7 +41,7 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text
             if (text === 'Generic') {
                 sendGenericMessage(sender)
-               // continue
+                //continue
             }
             console.log("in if condition = ")
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -60,7 +60,7 @@ app.post('/webhook/', function (req, res) {
                             console.log("data.message = ",data.message)
                             sendTextMessage(sender, data.message)
                             sendTextMessageOnResponse(sender, text.substring(0, 200))
-                           sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
+                          sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -151,34 +151,12 @@ function sendTextMessageOnResponseAPI(sender, text) {
        // sendTextMessage(sender, data.message)
         //sendTextMessageOnResponse(sender, data.books)
         //sendTextMessage(sender, '{ "text": "This is my text" }')
-        sendGenericMessageForBook(sender, data.message)
+        sendGenericMessage(sender)
     });
 
    
 }
-function sendGenericMessageForBook(sender,textObj) {
-//var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
-    delete textObj.attachment.payload["text"];
-    console.log('text delete ', textObj)
-    delete textObj.attachment.payload["buttons"];
-    console.log('buttons delete ', textObj)
-    let messageData = textObj
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
-        method: 'POST',
-        json: {
-            recipient: { id: sender },
-            message: messageData,
-        }
-    }, function (error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-}
+
 function sendGenericMessage(sender) {
     var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
     delete myObj.attachment.payload["text"];
