@@ -58,7 +58,7 @@ app.post('/webhook/', function (req, res) {
                 client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
                     // parsed response body as js object
                     console.log("data.message = ", data.message)
-                    if (text === 'Postback') {
+                    if (text == 'Postback') {
                         console.log("if postback", text)
                         sendTextMessageOnResponse(sender, "Order Conferm")
                     }
