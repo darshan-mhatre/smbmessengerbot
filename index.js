@@ -146,12 +146,12 @@ function sendTextMessageOnResponseAPI(sender, text) {
         // parsed response body as js object 
         console.log(data)
         // raw response 
-        console.log("data.message books = ", data.books)
+        console.log("data.message books = ", data.books[0])
        
        // sendTextMessage(sender, data.message)
         //sendTextMessageOnResponse(sender, data.books)
         // sendTextMessage(sender, data.books)
-        sendGenericMessage(sender)
+        //sendGenericMessage(sender)
     });
 
    
