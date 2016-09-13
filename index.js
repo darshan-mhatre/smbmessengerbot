@@ -150,7 +150,7 @@ function sendTextMessageOnResponseAPI(sender, text) {
        
        // sendTextMessage(sender, data.message)
         //sendTextMessageOnResponse(sender, data.books)
-        sendTextMessage(sender, '{ "MyText": "2" }')
+        sendTextMessage(sender, '{ "text": "This is my text" }')
         //sendGenericMessage(sender)
     });
 
