@@ -58,7 +58,7 @@ app.post('/webhook/', function (req, res) {
                 client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
                     // parsed response body as js object
                     console.log("data.message = ", data.message)
-                    if (text == 'Postback') {
+                    if (text.payload == 'Payload for first element in a generic bubble') {
                         console.log("if postback", text)
                         sendTextMessageOnResponse(sender, "Order Conferm")
                     }
@@ -66,7 +66,7 @@ app.post('/webhook/', function (req, res) {
                     {
                         console.log("else postback ", text)
                     }
-                    console.log("data.text = ", text)
+                    console.log("data.text = ", text.payload)
                     sendTextMessage(sender, data.message) //Creates category buttons
                     sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
                     
