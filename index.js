@@ -60,7 +60,7 @@ app.post('/webhook/', function (req, res) {
                             console.log("data.message = ",data.message)
                             sendTextMessage(sender, data.message)
                             sendTextMessageOnResponse(sender, text.substring(0, 200))
-                          sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
+                            sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -77,6 +77,10 @@ app.post('/webhook/', function (req, res) {
 const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
 
 function sendTextMessage(sender, text) {
+    //var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
+    delete text.attachment.payload["elements"];
+    console.log('element delete ', text)
+   
     //let messageData = { text: text }
    // let messageData = { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } } }, { "type": "postback", "title": "Historical", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } } }, { "type": "postback", "title": "Novel", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } } }] } } }
     request({
