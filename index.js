@@ -48,24 +48,26 @@ app.post('/webhook/', function (req, res) {
         }
         if (event.postback) {
             let text = JSON.stringify(event.postback)
-            console.log("JSON stringify = ",text)
-            var args = {
-                            data: {},
-                            headers: { "Content-Type": "application/json" }
-                        };
+            console.log("JSON stringify = ", text)
+            if (text === '{"payload":"2"}') {
+                var args = {
+                    data: {},
+                    headers: { "Content-Type": "application/json" }
+                };
 
-                        client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                            // parsed response body as js object
-                            console.log("data.message = ",data.message)
+                client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                    // parsed response body as js object
+                    console.log("data.message = ", data.message)
 
-                            sendTextMessage(sender, data.message) //Creates category buttons
-                            sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
-                           
-                        });
+                    sendTextMessage(sender, data.message) //Creates category buttons
+                    sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
 
-                        // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-            //sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
-            //continue
+                });
+
+                // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+                //sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
+                //continue
+            }
         }
     }
     res.sendStatus(200)
