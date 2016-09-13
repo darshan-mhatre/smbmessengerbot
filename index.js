@@ -59,10 +59,12 @@ app.post('/webhook/', function (req, res) {
                     // parsed response body as js object
                     console.log("data.message = ", data.message)
                     if (text === 'Postback') {
+                        console.log("if postback = ", text)
                         sendTextMessageOnResponse(sender, "Ordered Successfully")
                     }
                     else
                     {
+                        console.log("else postback = ", text)
                         sendTextMessage(sender, data.message) //Creates category buttons
                         sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
                     }
@@ -146,14 +148,14 @@ function sendTextMessageOnResponseAPI(sender, text) {
        // sendTextMessage(sender, data.message)
         //sendTextMessageOnResponse(sender, data.books)
         //sendTextMessage(sender, '{ "text": "This is my text" }')
-        sendGenericMessage(sender)
+        sendGenericMessage(sender, data.message)
     });
 
    
 }
 
-function sendGenericMessage(sender) {
-    var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
+function sendGenericMessage(sender, myObj) {
+   // var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
     delete myObj.attachment.payload["text"];
     console.log('text delete ', myObj)
     delete myObj.attachment.payload["buttons"];
