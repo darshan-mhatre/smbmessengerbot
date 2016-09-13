@@ -49,7 +49,7 @@ app.post('/webhook/', function (req, res) {
         if (event.postback) {
             let text = JSON.stringify(event.postback)
             console.log("JSON stringify = ", text)
-            if (text === '{"payload":"2"}') {
+           
                 var args = {
                     data: {},
                     headers: { "Content-Type": "application/json" }
@@ -58,16 +58,21 @@ app.post('/webhook/', function (req, res) {
                 client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
                     // parsed response body as js object
                     console.log("data.message = ", data.message)
-
+                    if (text === "Postback") {
+                        sendTextMessageOnResponse(sender, "Ordered Successfully")
+                    }
+                    else
+                    {
                     sendTextMessage(sender, data.message) //Creates category buttons
                     sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+                    }
 
                 });
 
                 // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
                 //sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
                 //continue
-            }
+          
         }
     }
     res.sendStatus(200)
@@ -79,7 +84,7 @@ app.post('/webhook/', function (req, res) {
 const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
 
 function sendTextMessage(sender, text) {
-    var text = {"attachment":{"type":"template","payload":{"template_type":"button","text":"What do you want to do next?","buttons":[{"type":"postback","title":"Business","payload":{"api":"GetBooks","param":{"BookCategoryID":"1"}}},{"type":"postback","title":"Sports","payload":{"api":"GetBooks","param":{"BookCategoryID":"2"}}},{"type":"postback","title":"Study","payload":{"api":"GetBooks","param":{"BookCategoryID":"3"}}}]}}}
+    //var text = {"attachment":{"type":"template","payload":{"template_type":"button","text":"What do you want to do next?","buttons":[{"type":"postback","title":"Business","payload":{"api":"GetBooks","param":{"BookCategoryID":"1"}}},{"type":"postback","title":"Sports","payload":{"api":"GetBooks","param":{"BookCategoryID":"2"}}},{"type":"postback","title":"Study","payload":{"api":"GetBooks","param":{"BookCategoryID":"3"}}}]}}}
     //var myObj = { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for first element in a generic bubble", }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Postback", "payload": "Payload for second element in a generic bubble", }] }] } } }
     delete text.attachment.payload["elements"];
     console.log('element delete ', text)
@@ -128,7 +133,7 @@ function sendTextMessageOnResponse(sender, text) {
 function sendTextMessageOnResponseAPI(sender, text) {
     console.log('API response: ', text)
     var args = {
-        data: { "BookCategoryID": "2" },
+        data: text, //{ "BookCategoryID": "2" }
         headers: { "Content-Type": "application/json" }
     };
 
