@@ -66,7 +66,7 @@ app.post('/webhook/', function (req, res) {
                     {
                         console.log("else postback ", text)
                     }
-                   
+                    console.log("data.text = ", text)
                     sendTextMessage(sender, data.message) //Creates category buttons
                     sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
                     
