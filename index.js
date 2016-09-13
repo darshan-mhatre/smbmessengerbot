@@ -55,13 +55,12 @@ app.post('/webhook/', function (req, res) {
                         };
 
                         client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                            // parsed response body as js object 
-                            console.log(data)
-                            // raw response 
+                            // parsed response body as js object
                             console.log("data.message = ",data.message)
-                            sendTextMessage(sender, data.message)
-                            sendTextMessageOnResponse(sender, text.substring(0, 200))
-                            sendTextMessageOnResponseAPI(sender, text.substring(0, 200))
+
+                            sendTextMessage(sender, data.message) //Creates category buttons
+                            sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+                           
                         });
 
                         // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -121,28 +120,11 @@ function sendTextMessageOnResponse(sender, text) {
             console.log('Error: ', response.body.error)
         }
     })
+    sendTextMessageOnResponseAPI(sender, text) //call api for books 
 }
 
 function sendTextMessageOnResponseAPI(sender, text) {
     console.log('API response: ', text)
-
-  //  let messageData = { "BookCategoryID": "1" }
-
-    //request({
-    //    url: 'https://graph.facebook.com/v2.6/me/messages',
-    //    qs: { access_token: token },
-    //    method: 'POST',
-    //    json: {
-    //        recipient: { id: sender },
-    //        message: messageData, //messageData
-    //    }
-    //}, function (error, response, body) {
-    //    if (error) {
-    //        console.log('Error sending messages: ', error)
-    //    } else if (response.body.error) {
-    //        console.log('Error: ', response.body.error)
-    //    }
-    //})
     var args = {
         data: { "BookCategoryID": "2" },
         headers: { "Content-Type": "application/json" }
