@@ -43,7 +43,7 @@ app.post('/webhook', function (req, res) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
   console.log("pageID");
-  console.log(pageID);
+  console.log(pageEntry);
       pageEntry.messaging.forEach(function (event) {
         if (event.message && event.message.text) {
   console.log("event");
