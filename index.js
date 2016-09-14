@@ -58,27 +58,27 @@ app.post('/webhook/', function (req, res) {
             var txtype = event.postback;
             console.log("JSON stringify = ", text)
 
-            var args = {
-                data: {},
-                headers: { "Content-Type": "application/json" }
-            };
+            //var args = {
+            //    data: {},
+            //    headers: { "Content-Type": "application/json" }
+            //};
 
-            client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                // parsed response body as js object
-                console.log("data.message = ", data.message)
-                if (txtype.payload == 'Payload for first element in a generic bubble') {
-                    console.log("if postback", txtype)
-                    sendTextMessageOnResponse(sender, "Order confirmation")
-                }
-                else {
-                    console.log("else postback ", txtype)
-                }
-                console.log("data.text = ", txtype.payload)
-                sendTextMessage(sender, data.message) //Creates category buttons
-                sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+            //client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+            //    // parsed response body as js object
+            //    console.log("data.message = ", data.message)
+            //    if (txtype.payload == 'Payload for first element in a generic bubble') {
+            //        console.log("if postback", txtype)
+            //        sendTextMessageOnResponse(sender, "Order confirmation")
+            //    }
+            //    else {
+            //        console.log("else postback ", txtype)
+            //    }
+            //    console.log("data.text = ", txtype.payload)
+            //    sendTextMessage(sender, data.message) //Creates category buttons
+            //    sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
 
 
-            });
+            //});
 
             // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             //sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
