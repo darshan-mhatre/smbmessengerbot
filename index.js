@@ -5,6 +5,10 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 
+//Example POST method invocation 
+var Client = require('node-rest-client').Client;
+var client = new Client();
+
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
