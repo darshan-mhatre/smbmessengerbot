@@ -32,8 +32,10 @@ app.get('/webhook/', function (req, res) {
 
 // to post data
 app.post('/webhook/', function (req, res) {
+    let text2 = JSON.stringify(req.body)
     let messaging_events = req.body.entry[0].messaging
     console.log("before for condition = ", messaging_events)
+    console.log("req body = ", text2)
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
@@ -61,7 +63,7 @@ app.post('/webhook/', function (req, res) {
                     console.log("data.message = ", data.message)
                     if (txtype.payload == 'Payload for first element in a generic bubble') {
                         console.log("if postback", txtype)
-                        sendTextMessageOnResponse(sender, "Order Conferm")
+                        sendTextMessageOnResponse(sender, "Order confirmation")
                     }
                     else
                     {
