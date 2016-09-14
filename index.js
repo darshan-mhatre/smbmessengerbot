@@ -9,10 +9,10 @@ app.use(bodyParser.urlencoded({
 
 var port = process.env.PORT || 8080;
 
-var token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD";
+var token = "EAABuCopCejMBAFZCdziD6pFSNQOaGI6wmXUyZBWRXMlETpiPwKVGjVXuecg0J2NqQigSpMnWi4Tts97AWV2qS1riCR0jIpGcrWr2JcLZAll2k3ZAQfJwLYCKI6OYA37eu3bZAm1aiCpS4draDLW6yIDWqjJ0Sh1AmJOvV29wUoAZDZD";
 
 app.get('/webhook/', function (req, res) {
-  if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+  if (req.query['hub.verify_token'] === 'test smb bot') {
     res.send(req.query['hub.challenge']);
   }
   res.send('Error, wrong validation token');
