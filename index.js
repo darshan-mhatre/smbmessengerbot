@@ -51,6 +51,39 @@ app.post('/webhook/', function (req, res) {
             });
            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
+
+        if (event.postback) {
+            let text = JSON.stringify(event.postback)
+            var txtype = event.postback;
+            console.log("JSON stringify = ", text)
+
+            var args = {
+                data: {},
+                headers: { "Content-Type": "application/json" }
+            };
+
+            client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                // parsed response body as js object
+                console.log("data.message = ", data.message)
+                if (txtype.payload == 'Payload for first element in a generic bubble') {
+                    console.log("if postback", txtype)
+                    sendTextMessageOnResponse(sender, "Order confirmation")
+                }
+                else {
+                    console.log("else postback ", txtype)
+                }
+                console.log("data.text = ", txtype.payload)
+                sendTextMessage(sender, data.message) //Creates category buttons
+                sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+
+
+            });
+
+            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            //sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
+            //continue
+
+        }
     }
     res.sendStatus(200)
 })
@@ -68,7 +101,8 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
         recipient: {id:sender}, 
-        message: messageData //{"attachment":{"type":"template","payload":{"template_type":"button","text":"What do you want to do next?","buttons":[{"type":"postback","title":"Business","payload":{"api":"GetBooks","param":{"BookCategoryID":"1"}}},{"type":"postback","title":"Sports","payload":{"api":"GetBooks","param":{"BookCategoryID":"2"}}},{"type":"postback","title":"Study","payload":{"api":"GetBooks","param":{"BookCategoryID":"3"}}}]}}} // { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
+        message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } } }, { "type": "postback", "title": "Historical", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } } }, { "type": "postback", "title": "Novel", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } } }], "elements": null } } }
+            //{"attachment":{"type":"template","payload":{"template_type":"button","text":"What do you want to do next?","buttons":[{"type":"postback","title":"Business","payload":{"api":"GetBooks","param":{"BookCategoryID":"1"}}},{"type":"postback","title":"Sports","payload":{"api":"GetBooks","param":{"BookCategoryID":"2"}}},{"type":"postback","title":"Study","payload":{"api":"GetBooks","param":{"BookCategoryID":"3"}}}]}}} // { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
            
             //    {
             //            "attachment":{
