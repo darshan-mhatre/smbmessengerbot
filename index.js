@@ -67,8 +67,8 @@ function sendTextMessage(sender, text) {
         qs: {access_token:token},
         method: 'POST',
         json: {
-            recipient: {id:sender},
-            message: messageData // { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
+            recipient: {id:sender}, 
+        message: {"attachment":{"type":"template","payload":{"template_type":"button","text":"What do you want to do next?","buttons":[{"type":"postback","title":"Business","payload":{"api":"GetBooks","param":{"BookCategoryID":"1"}}},{"type":"postback","title":"Sports","payload":{"api":"GetBooks","param":{"BookCategoryID":"2"}}},{"type":"postback","title":"Study","payload":{"api":"GetBooks","param":{"BookCategoryID":"3"}}}]}}} // { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
            
             //    {
             //            "attachment":{
