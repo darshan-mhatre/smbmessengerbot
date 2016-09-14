@@ -68,7 +68,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
+            message: messageData // { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
            
             //    {
             //            "attachment":{
