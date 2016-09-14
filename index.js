@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({
 
 var port = process.env.PORT || 8080;
 
-var token = "EAABuCopCejMBAFZCdziD6pFSNQOaGI6wmXUyZBWRXMlETpiPwKVGjVXuecg0J2NqQigSpMnWi4Tts97AWV2qS1riCR0jIpGcrWr2JcLZAll2k3ZAQfJwLYCKI6OYA37eu3bZAm1aiCpS4draDLW6yIDWqjJ0Sh1AmJOvV29wUoAZDZD";
+var token = "EAABuCopCejMBAHqFn3lvKbH3FcHV8KMFBKTNPETuE1ZABN4BA2zzhMCoI4oAEKSVkpODzsJJdK0DOjHeL0rZCl8MWg4nZBiRoMoGNwLPZC2l6fuhp67ZCuV1YfNcX1S1Op2EY9JY3MHaBl817YdMwZBmGO2CfNgrTfWtttfMhiYAZDZD";
 
 app.get('/webhook/', function (req, res) {
   if (req.query['hub.verify_token'] === 'test smb bot') {
