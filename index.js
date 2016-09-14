@@ -35,13 +35,21 @@ app.post('/webhook', function (req, res) {
   var data = req.body;
   console.log("req.body");
   console.log(req.body);
+  console.log("data.object");
+  console.log(data.object);
   if (data.object == 'page') {
     data.entry.forEach(function (pageEntry) {
+
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
+  console.log("pageID");
+  console.log(pageID);
       pageEntry.messaging.forEach(function (event) {
         if (event.message && event.message.text) {
+  console.log("event");
+  console.log(event);
           receivedMessage(event);
+          
         }
       });
     });
