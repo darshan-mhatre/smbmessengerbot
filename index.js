@@ -57,32 +57,25 @@ app.post('/webhook/', function (req, res) {
             let text = JSON.stringify(event.postback)
             var txtype = event.postback;
             console.log("JSON stringify = ", text)
+            var param = { "BookCategoryID": "2" }
+            var args = {
+                data: param,
+                headers: { "Content-Type": "application/json" }
+            };
 
-            //var args = {
-            //    data: {},
-            //    headers: { "Content-Type": "application/json" }
-            //};
-
-            //client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-            //    // parsed response body as js object
-            //    console.log("data.message = ", data.message)
-            //    if (txtype.payload == 'Payload for first element in a generic bubble') {
-            //        console.log("if postback", txtype)
-            //        sendTextMessageOnResponse(sender, "Order confirmation")
-            //    }
-            //    else {
-            //        console.log("else postback ", txtype)
-            //    }
-            //    console.log("data.text = ", txtype.payload)
-            //    sendTextMessage(sender, data.message) //Creates category buttons
-            //    sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
-
-
-            //});
-
-            // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-            //sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token)
-            //continue
+            client.post("http://52.3.172.40/facebookbot/api/Book/GetBooks", args, function (data, response) {
+                // parsed response body as js object
+                console.log("data.message = ", data.message)
+                sendTextMessageOnResponse(sender, "Order confirmation")
+                //if (txtype.payload == 'Payload for first element in a generic bubble') {
+                //    console.log("if postback", txtype)
+                //    sendTextMessageOnResponse(sender, "Order confirmation")
+                //}
+                //else {
+                //    console.log("else postback ", txtype)
+                //}
+                //console.log("data.text = ", txtype.payload)
+            });
 
         }
     }
@@ -134,6 +127,28 @@ function sendTextMessage(sender, text) {
             console.log('Error: ', response.body.error)
         }
     })
+}
+
+function sendTextMessageOnResponse(sender, text) {
+    console.log('Message On response: ', text)
+    let messageData = { text: text }
+
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: token },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: messageData, //messageData
+        }
+    }, function (error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+    sendTextMessageOnResponseAPI(sender, text) //call api for books 
 }
 
 const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
