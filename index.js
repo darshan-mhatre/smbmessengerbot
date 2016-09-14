@@ -34,41 +34,54 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            var args = {
+                data: {},
+                headers: { "Content-Type": "application/json" }
+            };
+
+            client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                // parsed response body as js object
+                console.log("data.message = ", data.message)
+                sendTextMessage(sender, data.message) //Creates category buttons
+                //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+            });
+           // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
     }
     res.sendStatus(200)
 })
 
 function sendTextMessage(sender, text) {
-    let messageData = { text:text }
+    // let messageData = { text:text }
+    let messageData = text
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: {
-                        "attachment":{
-                        "type":"template",
-                        "payload":{
-                            "template_type":"button",
-                            "text":"What do you want to do next?",
-                            "buttons":[
-                            {
-                                "type":"web_url",
-                                "url":"https://petersapparel.parseapp.com",
-                                "title":"Show Website"
-                            },
-                            {
-                                "type":"postback",
-                                "title":"Start Chatting",
-                                "payload":"USER_DEFINED_PAYLOAD"
-                            }
-                            ]
-                        }
-                        }
-            }
+            message: messageData
+            //    {
+            //            "attachment":{
+            //            "type":"template",
+            //            "payload":{
+            //                "template_type":"button",
+            //                "text":"What do you want to do next?",
+            //                "buttons":[
+            //                {
+            //                    "type":"web_url",
+            //                    "url":"https://petersapparel.parseapp.com",
+            //                    "title":"Show Website"
+            //                },
+            //                {
+            //                    "type":"postback",
+            //                    "title":"Start Chatting",
+            //                    "payload":"USER_DEFINED_PAYLOAD"
+            //                }
+            //                ]
+            //            }
+            //            }
+            //}
         }
     }, function(error, response, body) {
         if (error) {
