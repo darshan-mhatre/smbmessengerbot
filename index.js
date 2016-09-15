@@ -73,6 +73,7 @@ app.post('/webhook/', function (req, res) {
                 else {
                      console.log("else postback ", txtype)
                      sendTextMessageOnResponse(sender, 'Order confirmation')
+                     sendTextMessage(sender, '{"payload":"'+data.payload+'"')
                 }
                // console.log("data.text = ", txtype.payload)
             });
@@ -121,6 +122,61 @@ function sendTextMessage(sender, text) {
             //}
         }
     }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+function sendTextMessageBooks(sender, text) {
+    // let messageData = { text:text }
+
+    let messageData = text
+    delete messageData.attachment.payload["elements"];
+    console.log('element delete ', messageData)
+
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: token },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "First card",
+                            "subtitle": "Element #1 of an hscroll",
+                            "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                            "buttons": [{
+                                "type": "web_url",
+                                "url": "https://www.messenger.com",
+                                "title": "web url"
+                            }, {
+                                "type": "postback",
+                                "title": "Postback",
+                                "payload": "Payload for first element in a generic bubble",
+                            }],
+                        }, {
+                            "title": "Second card",
+                            "subtitle": "Element #2 of an hscroll",
+                            "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                            "buttons": [{
+                                "type": "postback",
+                                "title": "Postback",
+                                "payload": "Payload for second element in a generic bubble",
+                            }],
+                        }]
+                    }
+                }
+            }
+           
+        }
+    }, function (error, response, body) {
         if (error) {
             console.log('Error sending messages: ', error)
         } else if (response.body.error) {
