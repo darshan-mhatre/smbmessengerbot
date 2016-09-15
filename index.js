@@ -41,20 +41,17 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text
             if (text == '#book') {
 
-                var res = CallApi()
-                console.log('call Api result function call ', res)
-                sendTextMessage(sender, res)
-                //var args = {
-                //    data: {},
-                //    headers: { "Content-Type": "application/json" }
-                //};
+                var args = {
+                    data: {},
+                    headers: { "Content-Type": "application/json" }
+                };
 
-                //client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                //    // parsed response body as js object
-                //    console.log("data.message = ", data.message)
-                //    sendTextMessage(sender, data.message) //Creates category buttons
-                //    //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
-                //});
+                client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                    // parsed response body as js object
+                    console.log("data.message = ", data.message)
+                    sendTextMessage(sender, data.message) //Creates category buttons
+                    //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+                });
                 // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             }
         }
@@ -89,25 +86,6 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-function CallApi()
-{
-    var args = {
-        data: {},
-        headers: { "Content-Type": "application/json" }
-    };
-    var res
-    client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-        // parsed response body as js object
-        console.log("data.message = ", data.message)
-        res = data.message
-        
-        //Creates category buttons
-        //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
-    });
-    console.log('call Api result ', res)
-    return res
-}
-
 function sendTextMessage(sender, text) {
     // let messageData = { text:text }
    
@@ -121,7 +99,42 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
         recipient: {id:sender}, 
-        message: messageData
+        message: {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": "What do you want to do next?",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Commic",
+                        "payload": {
+                            "param": {
+                                "BookCategoryID": "1"
+                            }
+                        }
+                    }, {
+                        "type": "postback",
+                        "title": "Historical",
+                        "payload": {
+                            "param": {
+                                "BookCategoryID": "2"
+                            }
+                        }
+                    }, {
+                        "type": "postback",
+                        "title": "Novel",
+                        "payload": {
+                            "param": {
+                                "BookCategoryID": "3"
+                            }
+                        }
+                    }]
+
+                }
+            }
+        }
+            //messageData
             //{"attachment":{"type":"template","payload":{"template_type":"button","text":"What do you want to do next?","buttons":[{"type":"postback","title":"Business","payload":{"api":"GetBooks","param":{"BookCategoryID":"1"}}},{"type":"postback","title":"Sports","payload":{"api":"GetBooks","param":{"BookCategoryID":"2"}}},{"type":"postback","title":"Study","payload":{"api":"GetBooks","param":{"BookCategoryID":"3"}}}]}}} // { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
            
             //    {
