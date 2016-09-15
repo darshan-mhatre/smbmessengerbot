@@ -39,18 +39,21 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
-            var args = {
-                data: {},
-                headers: { "Content-Type": "application/json" }
-            };
+            if (text == '#book') {
 
-            client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                // parsed response body as js object
-                console.log("data.message = ", data.message)
-                sendTextMessage(sender, data.message) //Creates category buttons
-                //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
-            });
-           // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+                var args = {
+                    data: {},
+                    headers: { "Content-Type": "application/json" }
+                };
+
+                client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                    // parsed response body as js object
+                    console.log("data.message = ", data.message)
+                    sendTextMessage(sender, data.message) //Creates category buttons
+                    //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+                });
+                // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            }
         }
 
         if (event.postback) {
