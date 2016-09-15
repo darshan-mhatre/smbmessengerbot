@@ -72,9 +72,9 @@ app.post('/webhook/', function (req, res) {
                 }
                 else {
                      console.log("else postback ", txtype)
-                     sendTextMessageOnResponse(sender, "Order confirmation")
+                     sendTextMessageOnResponse(sender, 'Order confirmation')
                 }
-                console.log("data.text = ", txtype.payload)
+               // console.log("data.text = ", txtype.payload)
             });
 
         }
