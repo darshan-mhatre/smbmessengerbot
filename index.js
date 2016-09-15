@@ -41,17 +41,20 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text
             if (text == '#book') {
 
-                var args = {
-                    data: {},
-                    headers: { "Content-Type": "application/json" }
-                };
+                var res = CallApi()
+                console.log('call Api result function call ', res)
+                sendTextMessage(sender, res)
+                //var args = {
+                //    data: {},
+                //    headers: { "Content-Type": "application/json" }
+                //};
 
-                client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                    // parsed response body as js object
-                    console.log("data.message = ", data.message)
-                    sendTextMessage(sender, data.message) //Creates category buttons
-                    //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
-                });
+                //client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+                //    // parsed response body as js object
+                //    console.log("data.message = ", data.message)
+                //    sendTextMessage(sender, data.message) //Creates category buttons
+                //    //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+                //});
                 // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             }
         }
@@ -85,6 +88,25 @@ app.post('/webhook/', function (req, res) {
     }
     res.sendStatus(200)
 })
+
+function CallApi()
+{
+    var args = {
+        data: {},
+        headers: { "Content-Type": "application/json" }
+    };
+    var res
+    client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
+        // parsed response body as js object
+        console.log("data.message = ", data.message)
+        res = data.message
+        
+        //Creates category buttons
+        //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
+    });
+    console.log('call Api result ', res)
+    return res
+}
 
 function sendTextMessage(sender, text) {
     // let messageData = { text:text }
