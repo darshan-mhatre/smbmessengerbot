@@ -71,7 +71,8 @@ app.post('/webhook/', function (req, res) {
                     sendTextMessageOnResponse(sender, "Order confirmation")
                 }
                 else {
-                    console.log("else postback ", txtype)
+                     console.log("else postback ", txtype)
+                     sendTextMessageOnResponse(sender, "Order confirmation")
                 }
                 console.log("data.text = ", txtype.payload)
             });
