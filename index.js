@@ -109,7 +109,7 @@ function sendTextMessage(sender, text) {
                         "type": "postback",
                         "title": "Commic",
                         "payload": {
-                            "param": {
+                            "api": {
                                 "BookCategoryID": "1"
                             }
                         }
@@ -117,15 +117,15 @@ function sendTextMessage(sender, text) {
                         "type": "postback",
                         "title": "Historical",
                         "payload": {
-                            "param": {
+                            "api": {
                                 "BookCategoryID": "2"
                             }
                         }
-                    }, {
+                    }, {    
                         "type": "postback",
                         "title": "Novel",
                         "payload": {
-                            "param": {
+                            "api": {
                                 "BookCategoryID": "3"
                             }
                         }
