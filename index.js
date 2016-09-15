@@ -68,7 +68,7 @@ app.post('/webhook/', function (req, res) {
                 console.log("data.message = ", data.message)
                 if (txtype.payload == 'Payload for first element in a generic bubble') {
                     console.log("if postback", txtype)
-                    sendTextMessageOnResponse(sender, "Order confirmation")
+                    //sendTextMessageOnResponse(sender, "Order confirmation")
                 }
                 else {
                      console.log("else postback ", txtype)
