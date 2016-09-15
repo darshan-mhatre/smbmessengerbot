@@ -133,11 +133,7 @@ function sendTextMessage(sender, text) {
 function sendTextMessageBooks(sender, text) {
     // let messageData = { text:text }
 
-    let messageData = text
-    delete messageData.attachment.payload["elements"];
-    console.log('element delete ', messageData)
-
-    request({
+        request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
         method: 'POST',
