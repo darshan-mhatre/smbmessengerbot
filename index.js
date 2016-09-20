@@ -40,9 +40,11 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text
             console.log('Text Message: ', text)
             if (text == '#book') {
+                var apiRes;
                 sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
                 callApi("Book/GetBookCategories", "", function (data) {
-                    console.log(data);
+                    console.log('get response: ',data);
+                    apiRes = data;
                 });
                 console.log('Api Response: ', apiRes)
             }
