@@ -60,7 +60,7 @@ function callApi(apiName, apiParam) {
     };
 
     client.post("http://52.3.172.40/facebookbot/api/" + apiName, args, function (data, response) {
-        console.log('Api Response in function: ', apiRes)
+        console.log('Api Response in function: ', data.message)
        return data.message
     });
 }
