@@ -42,15 +42,27 @@ app.post('/webhook/', function (req, res) {
             if (text == '#book') {
                 var apiRes;
                 sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-                callApi("Book/GetBookCategories", "", function (data) {
+                callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
                     console.log('get response: ',data)
-                    sendFormat(sender, data)
+                    sendFormat(sender, data)             // send response of api to display lis of category
                 });
             }
             else
             {
                 sendTextMessage(sender, "Colud not recognised..Please enter valid #tag")
             }
+        }
+
+        if (event.postback) {
+            let text = JSON.stringify(event.postback)
+            var txtype = event.postback;
+            var param = { "BookCategoryID": "2" }
+            console.log("JSON stringify = ", text)
+            console.log("txtype = ", txtype)
+            callApi("Book/GetBooks", param, function (data) {                  // call get book api
+                console.log('get response book: ', data.message)
+            });
+
         }
     }
     res.sendStatus(200)
