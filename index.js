@@ -33,133 +33,35 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
-    console.log("before for condition = ", messaging_events)
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
         let sender = event.sender.id
         if (event.message && event.message.text) {
             let text = event.message.text
+            console.log('Text Message: ', text)
             if (text == '#book') {
-
-                var args = {
-                    data: {},
-                    headers: { "Content-Type": "application/json" }
-                };
-
-                client.post("http://52.3.172.40/facebookbot/api/Book/GetBookCategories", args, function (data, response) {
-                    // parsed response body as js object
-                    console.log("data.message = ", data.message)
-                    sendTextMessage(sender, data.message) //Creates category buttons
-                    //sendTextMessageOnResponse(sender, text.substring(0, 200)) //text message 
-                });
-                // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+                sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             }
-        }
-
-        if (event.postback) {
-            let text = JSON.stringify(event.postback)
-            var txtype = event.postback;
-            console.log("JSON stringify = ", text)
-            var param = { "BookCategoryID": "2" }
-            var args = {
-                data: param,
-                headers: { "Content-Type": "application/json" }
-            };
-
-            client.post("http://52.3.172.40/facebookbot/api/Book/GetBooks", args, function (data, response) {
-                // parsed response body as js object
-                console.log("data.message = ", data.message)
-                if (txtype.payload == 'Payload for first element in a generic bubble') {
-                    console.log("if postback", txtype)
-                    //sendTextMessageOnResponse(sender, "Order confirmation")
-                }
-                else {
-                     console.log("else postback ", txtype)
-                     sendTextMessageOnResponse(sender, 'Order confirmation')
-                     sendTextMessageBooks(sender, '{"payload":"' + data.payload + '"')
-                }
-               // console.log("data.text = ", txtype.payload)
-            });
-
+            else
+            {
+                sendTextMessage(sender, "Colud not recognised..Please enter valid #tag")
+            }
         }
     }
     res.sendStatus(200)
 })
 
 function sendTextMessage(sender, text) {
-    // let messageData = { text:text }
-   
-    let messageData = text
-    delete messageData.attachment.payload["elements"];
-    console.log('element delete ', messageData)
-
+    let messageData = { text: text }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:token},
+        qs: { access_token: token },
         method: 'POST',
         json: {
-        recipient: {id:sender}, 
-        message: {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "button",
-                    "text": "What do you want to do next?",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Commic",
-                        "payload": {
-                            "api": {
-                                "BookCategoryID": "1"
-                            }
-                        }
-                    }, {
-                        "type": "postback",
-                        "title": "Historical",
-                        "payload": {
-                            "api": {
-                                "BookCategoryID": "2"
-                            }
-                        }
-                    }, {    
-                        "type": "postback",
-                        "title": "Novel",
-                        "payload": {
-                            "api": {
-                                "BookCategoryID": "3"
-                            }
-                        }
-                    }]
-
-                }
-            }
+            recipient: { id: sender },
+            message: messageData
         }
-            //messageData
-            //{"attachment":{"type":"template","payload":{"template_type":"button","text":"What do you want to do next?","buttons":[{"type":"postback","title":"Business","payload":{"api":"GetBooks","param":{"BookCategoryID":"1"}}},{"type":"postback","title":"Sports","payload":{"api":"GetBooks","param":{"BookCategoryID":"2"}}},{"type":"postback","title":"Study","payload":{"api":"GetBooks","param":{"BookCategoryID":"3"}}}]}}} // { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": "1" }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": "3" }] } } }
-           
-            //    {
-            //            "attachment":{
-            //            "type":"template",
-            //            "payload":{
-            //                "template_type":"button",
-            //                "text":"What do you want to do next?",
-            //                "buttons":[
-            //                {
-            //                    "type":"web_url",
-            //                    "url":"https://petersapparel.parseapp.com",
-            //                    "title":"Show Website"
-            //                },
-            //                {
-            //                    "type":"postback",
-            //                    "title":"Start Chatting",
-            //                    "payload":"USER_DEFINED_PAYLOAD"
-            //                }
-            //                ]
-            //            }
-            //            }
-            //}
-        }
-    }, function(error, response, body) {
+    }, function (error, response, body) {
         if (error) {
             console.log('Error sending messages: ', error)
         } else if (response.body.error) {
@@ -168,10 +70,9 @@ function sendTextMessage(sender, text) {
     })
 }
 
-function sendTextMessageBooks(sender, text) {
-    // let messageData = { text:text }
-
-        request({
+function sendFormat(sender, text) {
+    let messageData = { text: text }
+    request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: token },
         method: 'POST',
@@ -181,34 +82,23 @@ function sendTextMessageBooks(sender, text) {
                 "attachment": {
                     "type": "template",
                     "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "First card",
-                            "subtitle": "Element #1 of an hscroll",
-                            "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                            "buttons": [{
-                                "type": "web_url",
-                                "url": "https://www.messenger.com",
-                                "title": "web url"
-                            }, {
-                                "type": "postback",
-                                "title": "Postback",
-                                "payload": "Payload for first element in a generic bubble",
-                            }],
-                        }, {
-                            "title": "Second card",
-                            "subtitle": "Element #2 of an hscroll",
-                            "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                            "buttons": [{
-                                "type": "postback",
-                                "title": "Postback",
-                                "payload": "Payload for second element in a generic bubble",
-                            }],
-                        }]
+                        "template_type": "button",
+                        "text": "What do you want to do next?",
+                        "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": "https://petersapparel.parseapp.com",
+                            "title": "Show Website"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Start Chatting",
+                            "payload": "USER_DEFINED_PAYLOAD"
+                        }
+                        ]
                     }
                 }
             }
-           
         }
     }, function (error, response, body) {
         if (error) {
@@ -219,27 +109,6 @@ function sendTextMessageBooks(sender, text) {
     })
 }
 
-function sendTextMessageOnResponse(sender, text) {
-    console.log('Message On response: ', text)
-    let messageData = { text: text }
-
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: token },
-        method: 'POST',
-        json: {
-            recipient: { id: sender },
-            message: messageData, //messageData
-        }
-    }, function (error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-    //sendTextMessageOnResponseAPI(sender, text) //call api for books 
-}
 
 const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
 
