@@ -41,7 +41,9 @@ app.post('/webhook/', function (req, res) {
             console.log('Text Message: ', text)
             if (text == '#book') {
                 sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-                let apiRes = callApi("Book/GetBookCategories", "")
+                callApi("Book/GetBookCategories", "", function (data) {
+                    console.log(data);
+                });
                 console.log('Api Response: ', apiRes)
             }
             else
@@ -53,7 +55,8 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
-function callApi(apiName, apiParam) {
+
+var callApi = function (apiName, apiParam, apiRes) {
     var args = {
         data: apiParam,
         headers: { "Content-Type": "application/json" }
@@ -61,7 +64,7 @@ function callApi(apiName, apiParam) {
 
     client.post("http://52.3.172.40/facebookbot/api/" + apiName, args, function (data, response) {
         console.log('Api Response in function: ', data.message)
-       return data.message
+       return apiRes(data.message)
     });
 }
 
