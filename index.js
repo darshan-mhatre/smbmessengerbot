@@ -61,6 +61,7 @@ app.post('/webhook/', function (req, res) {
             console.log("txtype = ", txtype)
             callApi("Book/GetBooks", param, function (data) {                  // call get book api
                 console.log('get response book: ', data.books)
+                testFunc(testFunc,"")
             });
         }
     }
@@ -118,6 +119,24 @@ function sendFormat(sender, messageData) {
     })
 }
 
+function testFunc(sender, text) {          // testFunction
+   
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: token },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "1" } } }, { "type": "postback", "title": "Sports", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "2" } } }, { "type": "postback", "title": "Study", "payload": { "api": "GetBooks", "param": { "BookCategoryID": "3" } } }] } } }
+        }
+    }, function (error, response, body) {
+        if (error) {
+            console.log('test func Error: ', error)
+        } else if (response.body.error) {
+            console.log('test func body Error: ', response.body.error)
+        }
+    })
+}
 
 const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
 
