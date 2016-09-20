@@ -43,8 +43,8 @@ app.post('/webhook/', function (req, res) {
                 var apiRes;
                 sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
                 callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
-                    console.log('get response: ',data)
-                    sendFormat(sender, data)             // send response of api to display lis of category
+                    console.log('get response: ', data.message)
+                    sendFormat(sender, data.message)             // send response of api to display lis of category
                 });
             }
             else
@@ -54,15 +54,14 @@ app.post('/webhook/', function (req, res) {
         }
 
         if (event.postback) {
-            let text = JSON.stringify(event.postback)
-            var txtype = event.postback;
+            let text = JSON.stringify(event.postback) // {"payload":"1"}
+            var txtype = event.postback;              // { payload: '1' }    
             var param = { "BookCategoryID": "2" }
             console.log("JSON stringify = ", text)
             console.log("txtype = ", txtype)
             callApi("Book/GetBooks", param, function (data) {                  // call get book api
-                console.log('get response book: ', data.message)
+                console.log('get response book: ', data.books)
             });
-
         }
     }
     res.sendStatus(200)
@@ -77,7 +76,7 @@ var callApi = function (apiName, apiParam, apiRes) {
 
     client.post("http://52.3.172.40/facebookbot/api/" + apiName, args, function (data, response) {
         console.log('Api Response in function: ', data.message)
-       return apiRes(data.message)
+       return apiRes(data)
     });
 }
 
