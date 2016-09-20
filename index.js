@@ -59,7 +59,8 @@ function callApi(apiName, apiParam) {
         headers: { "Content-Type": "application/json" }
     };
 
-    client.post("http://52.3.172.40/facebookbot/api/"+apiName, args, function (data, response) {
+    client.post("http://52.3.172.40/facebookbot/api/" + apiName, args, function (data, response) {
+        console.log('Api Response in function: ', apiRes)
        return data.message
     });
 }
