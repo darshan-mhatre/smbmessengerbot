@@ -128,7 +128,37 @@ function testFunc(sender, text) {          // testFunction
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": { "BookCategoryID": "1" } }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": { "BookCategoryID": "3" } }] } } }
+            message: {
+                    "attachment": {
+                        "type": "template",
+                        "payload": {
+                            "template_type": "generic",
+                            "elements": [{
+                                "title": "First card",
+                                "subtitle": "Element #1 of an hscroll",
+                                "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                                "buttons": [{
+                                    "type": "web_url",
+                                    "url": "https://www.messenger.com",
+                                    "title": "web url"
+                                }, {
+                                    "type": "postback",
+                                    "title": "Postback",
+                                    "payload": "Payload for first element in a generic bubble",
+                                }],
+                            }, {
+                                "title": "Second card",
+                                "subtitle": "Element #2 of an hscroll",
+                                "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                                "buttons": [{
+                                    "type": "postback",
+                                    "title": "Postback",
+                                    "payload": "Payload for second element in a generic bubble",
+                                }],
+                            }]
+                        }
+                    }
+                }
         }
     }, function (error, response, body) {
         if (error) {
