@@ -58,7 +58,7 @@ app.post('/webhook/', function (req, res) {
             var txtype = event.postback;              // { payload: '1' }    
             var param = { "BookCategoryID": "2" }
             console.log("JSON stringify = ", text)
-            console.log("txtype = ", txtype)
+            console.log("txtype = ", event.postback.payload)
             callApi("Book/GetBooks", param, function (data) {                  // call get book api
                 console.log('get response book: ', data.books)
                 testFunc(sender, "")
