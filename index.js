@@ -128,7 +128,7 @@ function testFunc(sender, text) {          // testFunction
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": { "type": "postback", "title": "Order book", "payload": "3" } }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": { "type": "postback", "title": "Order book", "payload": "5" } }] } } } 
+            message:  { "attachment": { "type": "template", "payload": { "template_type": "generic", "elements": [{ "title": "pqr", "subtitle": "test  2 description 1", "image_url": "", "buttons": [{ "type": "postback", "title": "Order book", "payload": "3" }] }, { "title": "hgfshd", "subtitle": "nabdmsnfd", "image_url": "", "buttons": [{ "type": "postback", "title": "Order book", "payload": "5" }] }] } } } 
         }
     }, function (error, response, body) {
         if (error) {
