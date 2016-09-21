@@ -58,16 +58,30 @@ app.post('/webhook/', function (req, res) {
            
             let text = JSON.stringify(event.postback) // {"payload":"1"}
             var txtype = event.postback;              // { payload: '1' }    
-            var param = { "BookCategoryID": event.postback.payload }
+            var str = event.postback.payload;
             console.log("event = ", event)
             console.log("JSON stringify = ", text)
             console.log("txtype = ", event.postback.payload)
             console.log("param = ", param)
-            callApi("Book/GetBooks", param, function (data) {                  // call get book api
-                console.log('get response book: ', data.message)
-                testFunc(sender,"")
-                //sendFormat(sender, data.message)
-            });
+            if (str.length > 7 && str.substring(0, 6) == "bookId") {
+                var id = txtype.slice(7);
+                console.log("slice id = ", id)
+                var param = { "BookCategoryID": id }
+                callApi("Book/GetBooks", param, function (data) {                  // call get book api
+                    console.log('get response book: ', data.message)
+                    //testFunc(sender,"")
+                    sendFormat(sender, data.message)
+                });
+            }
+            else
+            {
+                var param = { "BookCategoryID": str }
+                callApi("Book/GetBooks", param, function (data) {                  // call get book api
+                    console.log('get response book: ', data.message)
+                    testFunc(sender,"")
+                    //sendFormat(sender, data.message)
+                });
+            }
         }
     }
     res.sendStatus(200)
