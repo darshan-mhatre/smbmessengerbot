@@ -66,11 +66,11 @@ app.post('/webhook/', function (req, res) {
             if (str.length > 7 && str.substring(0, 6) == "bookId") {
                 var id = str.slice(7);
                 console.log("slice id = ", id)
-                var param = { "BookCategoryID": id }
-                callApi("Book/GetBooks", param, function (data) {                  // call get book api
-                    console.log('get response book: ', data.message)
+                var param = { "UserID": sender, "BookID" : id }
+                callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
+                    console.log('get response book: ', data.message + OrderID)
                     //testFunc(sender,"")
-                    sendFormat(sender, data.message)
+                   // sendFormat(sender, data.message)
                 });
             }
             else
@@ -78,8 +78,8 @@ app.post('/webhook/', function (req, res) {
                 var param = { "BookCategoryID": str }
                 callApi("Book/GetBooks", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message)
-                    testFunc(sender,"")
-                    //sendFormat(sender, data.message)
+                    //testFunc(sender,"")
+                    sendFormat(sender, data.message)
                 });
             }
         }
