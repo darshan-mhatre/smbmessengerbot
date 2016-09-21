@@ -54,9 +54,11 @@ app.post('/webhook/', function (req, res) {
         }
 
         if (event.postback) {
+           
             let text = JSON.stringify(event.postback) // {"payload":"1"}
             var txtype = event.postback;              // { payload: '1' }    
             var param = { "BookCategoryID": event.postback.payload }
+            console.log("event = ", event)
             console.log("JSON stringify = ", text)
             console.log("txtype = ", event.postback.payload)
             console.log("param = ", param)
