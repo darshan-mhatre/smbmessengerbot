@@ -61,8 +61,8 @@ app.post('/webhook/', function (req, res) {
             console.log("txtype = ", event.postback.payload)
             console.log("param = ", param)
             callApi("Book/GetBooks", param, function (data) {                  // call get book api
-                console.log('get response book: ', data.books)
-                testFunc(sender, "")
+                console.log('get response book: ', data.message)
+                sendFormat(sender, data.message)
             });
         }
     }
