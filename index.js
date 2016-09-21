@@ -127,7 +127,7 @@ function testFunc(sender, text) {          // testFunction
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": { "text": { "BookCategoryID": "1" } } }, { "type": "postback", "title": "Sports", "payload": { "text": { "BookCategoryID": "2" } } }, { "type": "postback", "title": "Study", "payload": { "text": { "BookCategoryID": "3" } } }] } } }
+            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": { "BookCategoryID": "1" } }, { "type": "postback", "title": "Sports", "payload": { "BookCategoryID": "2" }  }, { "type": "postback", "title": "Study", "payload": { "BookCategoryID": "3" } }] } } }
         }
     }, function (error, response, body) {
         if (error) {
