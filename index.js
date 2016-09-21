@@ -66,9 +66,9 @@ app.post('/webhook/', function (req, res) {
             if (str.length > 7 && str.substring(0, 6) == "bookId") {
                 var id = str.slice(7);
                 console.log("slice id = ", id)
-                var param = { "UserID": sender, "BookID" : id }
+                var param = { "UserID": event.sender.id, "BookID": id }
                 callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
-                    console.log('get response book: ', data.message + OrderID)
+                    console.log('get response book: ', data.message + data.OrderID)
                     //testFunc(sender,"")
                    // sendFormat(sender, data.message)
                 });
