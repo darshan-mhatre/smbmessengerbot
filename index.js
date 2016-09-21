@@ -64,7 +64,7 @@ app.post('/webhook/', function (req, res) {
             console.log("txtype = ", event.postback.payload)
             console.log("param = ", param)
             if (str.length > 7 && str.substring(0, 6) == "bookId") {
-                var id = txtype.slice(7);
+                var id = str.slice(7);
                 console.log("slice id = ", id)
                 var param = { "BookCategoryID": id }
                 callApi("Book/GetBooks", param, function (data) {                  // call get book api
