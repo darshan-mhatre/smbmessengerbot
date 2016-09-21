@@ -61,7 +61,7 @@ app.post('/webhook/', function (req, res) {
             console.log("txtype = ", txtype)
             callApi("Book/GetBooks", param, function (data) {                  // call get book api
                 console.log('get response book: ', data.books)
-                testFunc(testFunc,"")
+                testFunc(sender, "")
             });
         }
     }
