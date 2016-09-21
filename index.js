@@ -57,7 +57,7 @@ app.post('/webhook/', function (req, res) {
             let text = JSON.stringify(event.postback) // {"payload":"1"}
             var txtype = event.postback;              // { payload: '1' }    
             var param = { "BookCategoryID": "2" }
-            console.log('get response book: ', data.books)
+            console.log("JSON stringify = ", text)
             console.log("txtype = ", txtype)
             callApi("Book/GetBooks", param, function (data) {                  // call get book api
                 console.log('get response book: ', data.books)
@@ -127,7 +127,7 @@ function testFunc(sender, text) {          // testFunction
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": { "BookCategoryID": "1" } }, { "type": "postback", "title": "Sports", "payload": ""  }, { "type": "postback", "title": "Study", "payload": { "BookCategoryID": "3" } }] } } }
+            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Business", "payload": { "BookCategoryID": "1" } }, { "type": "postback", "title": "Sports", "payload": "2" }, { "type": "postback", "title": "Study", "payload": { "BookCategoryID": "3" } }] } } }
         }
     }, function (error, response, body) {
         if (error) {
