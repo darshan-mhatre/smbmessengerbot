@@ -65,7 +65,8 @@ app.post('/webhook/', function (req, res) {
             console.log("param = ", param)
             callApi("Book/GetBooks", param, function (data) {                  // call get book api
                 console.log('get response book: ', data.message)
-                sendFormat(sender, data.message)
+                testFunc(sender,"")
+                //sendFormat(sender, data.message)
             });
         }
     }
@@ -131,7 +132,7 @@ function testFunc(sender, text) {          // testFunction
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "What do you want to do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": "1" }, { "type": "postback", "title": "Historical", "payload": "2" }, { "type": "postback", "title": "Novel", "payload": "3" }] } } } 
+            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": "bookId:1" }, { "type": "postback", "title": "Historical", "payload": "bookId:2" }, { "type": "postback", "title": "Novel", "payload": "bookId:3" }] } } }
         }
     }, function (error, response, body) {
         if (error) {
