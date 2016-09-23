@@ -69,10 +69,11 @@ app.post('/webhook/', function (req, res) {
                 var param = { "UserID": event.sender.id, "BookID": id }
                 callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message + data.OrderID)
-                    //testFunc(sender,"")
-                   // sendFormat(sender, data.message)
+                    testFunc(sender,"")
+                    //sendTextMessage(sender, data.message + "Order Id:" + data.OrderID)
                 });
             }
+           
             else
             {
                 var param = { "BookCategoryID": str }
@@ -146,7 +147,22 @@ function testFunc(sender, text) {          // testFunction
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: { "attachment": { "type": "template", "payload": { "template_type": "button", "text": "do next?", "buttons": [{ "type": "postback", "title": "Commic", "payload": "bookId:1" }, { "type": "postback", "title": "Historical", "payload": "bookId:2" }, { "type": "postback", "title": "Novel", "payload": "bookId:3" }] } } }
+            message: {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Welcome to M-Bank",
+                            "image_url": "http://www.example.com/images/m-bank.png",
+                            "buttons": [{
+                                "type": "account_link",
+                                "url": "https://www.example.com/oauth/authorize"
+                            }]
+                        }]
+                    }
+                }
+            }
         }
     }, function (error, response, body) {
         if (error) {
