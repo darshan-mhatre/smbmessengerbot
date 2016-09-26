@@ -52,7 +52,7 @@ app.post('/webhook/', function (req, res) {
             {
                 var param = { "requestId": 1, "fbId": sender, "message": text.substring(0, 200) }
                 console.log('param Id: ', param)
-                callApi("Book/SavebotResponeMessage", param, function (data) {                  // call to save user message
+                callApi("Book/SavebotResponeMessage", param, function (data) {                  // call to save bot response message
                     console.log('get response: ', data.message)
                     console.log('response Id: ', data.response)
                 });
@@ -60,12 +60,27 @@ app.post('/webhook/', function (req, res) {
 
             console.log('Text Message: ', text)
             if (text == '#book') {
-                var apiRes;
-                sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-                callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
-                    console.log('get response: ', data.message)
-                    sendFormat(sender, data.message)             // send response of api to display lis of category
+
+                var isRegistered;
+                var param = {  "fbId": sender }
+                console.log('param Id: ', param)
+                callApi("Book/CheckRegisteredUser", param, function (data) {                  // call to check registered user
+                    console.log('get response: ', data.isRegistered)
+                    isRegistered = data.isRegistered;
                 });
+
+                if (isRegistered == true) {
+                    var apiRes;
+                    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+                    callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
+                        console.log('get response: ', data.message)
+                        sendFormat(sender, data.message)             // send response of api to display lis of category
+                    });
+                }
+                else
+                {
+                    sendTextMessage(sender, "You are not registered for #banking")
+                }
             }
             else
             {
