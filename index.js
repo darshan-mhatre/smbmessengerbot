@@ -85,7 +85,7 @@ app.post('/webhook/', function (req, res) {
             }
             else
             {
-                var param = { "requestId": 1, "fbId": sender, "message": text.substring(0, 200) }
+                var param = { "requestId": requestId, "fbId": sender, "message": text.substring(0, 200) }
                 console.log('param Id: ', param)
                 callApi("Book/SavebotResponeMessage", param, function (data) {                  // call to save bot response message
                     console.log('get response: ', data.message)
