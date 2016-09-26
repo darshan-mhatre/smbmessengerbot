@@ -62,7 +62,7 @@ app.post('/webhook/', function (req, res) {
             console.log('Text Message: ', text)
             if (text == '#book') {
 
-                var isRegistered;
+                var isRegistered='';
                 var param = {  "fbId": sender }
                 console.log('param Id: ', param)
                 callApi("Book/CheckRegisteredUser", param, function (data) {                  // call to check registered user
