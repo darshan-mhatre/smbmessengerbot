@@ -39,7 +39,7 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text && sender) {
             let text = event.message.text
-            var param = { "fbId": event.sender, "message": text.substring(0, 200) }
+            var param = { "fbId": sender, "message": text.substring(0, 200) }
             callApi("Book/SaveUserMessage", param, function (data) {                  // call to save user message
                 console.log('get response: ', data.message)
                 console.log('request Id: ', data.requestId)
