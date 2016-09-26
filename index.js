@@ -33,17 +33,23 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
+
     for (let i = 0; i < messaging_events.length; i++) {
+
         let event = req.body.entry[0].messaging[i]
         console.log('req.body.entry[0]: ', req.body.entry[0])
         let sender = event.sender.id
+
         if (event.message && event.message.text && sender) {
+
             let text = event.message.text
             console.log('sender Id: ', sender)
 
             if (sender != '805370696266097') {
+
                 var param = { "fbId": sender, "message": text.substring(0, 200) }
                 console.log('param Id: ', param)
+
                 callApi("Book/SaveUserMessage", param, function (data) {                  // call to save user message
                     console.log('get response: ', data.message)
                     console.log('request Id: ', data.requestId)
@@ -51,12 +57,12 @@ app.post('/webhook/', function (req, res) {
 
                 if (text == '#book') {
 
-
                     var param = { "fbId": sender }
                     console.log('param Id: ', param)
                     callApi("Book/CheckRegisteredUser", param, function (data) {                  // call to check registered user
+
                         console.log('isRegistered response: ', data.isRegistered)
-                        var isRegistered = data.isRegistered;
+                        let isRegistered = data.isRegistered;
 
                         if (data.isRegistered == 'true') {
                             var apiRes;
