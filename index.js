@@ -62,7 +62,7 @@ app.post('/webhook/', function (req, res) {
                     callApi("Book/CheckRegisteredUser", param, function (data) { 
                         console.log('isRegistered response: ', data.isRegistered)
                        
-                        if (data.isRegistered == 'true') {
+                        if (data.isRegistered == true) {
                             var apiRes;
                             console.log('in get category response: ', data.isRegistered)
                             //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -71,7 +71,7 @@ app.post('/webhook/', function (req, res) {
                                 sendFormat(sender, data1.message)             // send response of api to display lis of category
                             });
                         }
-                        else if (data.isRegistered == true) {
+                        else if (data.isRegistered == false) {
                             sendTextMessage(sender, "You are not registered for #banking")
                         }
                     });
