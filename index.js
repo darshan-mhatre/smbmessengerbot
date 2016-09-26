@@ -69,7 +69,7 @@ app.post('/webhook/', function (req, res) {
                     isRegistered = data.isRegistered;
                 });
 
-                if (isRegistered == true) {
+                if (isRegistered == 'true') {
                     var apiRes;
                     //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
                     callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
