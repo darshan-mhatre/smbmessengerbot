@@ -61,6 +61,7 @@ app.post('/webhook/', function (req, res) {
                     console.log('param Id: ', param)
                     callApi("Book/CheckRegisteredUser", param, function (data) { 
                         console.log('isRegistered response: ', data.isRegistered)
+                       
                         if (data.isRegistered == 'true') {
                             var apiRes;
                             console.log('in get category response: ', data.isRegistered)
@@ -70,7 +71,7 @@ app.post('/webhook/', function (req, res) {
                                 sendFormat(sender, data1.message)             // send response of api to display lis of category
                             });
                         }
-                        else if (data.isRegistered == 'false') {
+                        else if (data.isRegistered == true) {
                             sendTextMessage(sender, "You are not registered for #banking")
                         }
                     });
