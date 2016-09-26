@@ -71,9 +71,10 @@ app.post('/webhook/', function (req, res) {
 
                     if (data.isRegistered == 'true') {
                         var apiRes;
+                        console.log('in get category response: ', data.isRegistered)
                         //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
                         callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
-                            console.log('get response: ', data.message)
+                            console.log('get response of cat: ', data.message)
                             sendFormat(sender, data.message)             // send response of api to display lis of category
                         });
                     }
