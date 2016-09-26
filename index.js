@@ -40,12 +40,14 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text && sender) {
             let text = event.message.text
             console.log('sender Id: ', sender)
+            if (sender != '805370696266097'){
             var param = { "fbId": sender, "message": text.substring(0, 200) }
             console.log('param Id: ', param)
             callApi("Book/SaveUserMessage", param, function (data) {                  // call to save user message
                 console.log('get response: ', data.message)
                 console.log('request Id: ', data.requestId)
             });
+            }
 
             console.log('Text Message: ', text)
             if (text == '#book') {
