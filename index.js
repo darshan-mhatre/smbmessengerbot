@@ -112,8 +112,8 @@ app.post('/webhook/', function (req, res) {
                 var param = { "UserID": event.sender.id, "BookID": id }
                 callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message + data.OrderID)
-                    testFunc(sender,"")
-                    //sendTextMessage(sender, data.message + "Order Id:" + data.OrderID)
+                    //testFunc(sender,"")
+                    sendTextMessage(sender, data.message + "Order Id:" + data.OrderID)
                 });
             }
            
