@@ -39,7 +39,7 @@ app.post('/webhook/', function (req, res) {
         let event = req.body.entry[0].messaging[i]
         console.log('req.body.entry[0]: ', req.body.entry[0])
         let sender = event.sender.id
-
+        var userId;
         if (event.message && event.message.text && sender) {
 
             let text = event.message.text
@@ -62,7 +62,7 @@ app.post('/webhook/', function (req, res) {
                     console.log('param Id: ', param)
                     callApi("Book/CheckRegisteredUser", param, function (data) { 
                         console.log('isRegistered response: ', data.isRegistered)
-                       
+                        userId = data.isRegistered;
                         if (data.isRegistered == true) {
                             var apiRes;
                             console.log('in get category response: ', data.isRegistered)
@@ -109,11 +109,11 @@ app.post('/webhook/', function (req, res) {
             if (str.length > 7 && str.substring(0, 6) == "bookId") {
                 var id = str.slice(7);
                 console.log("slice id = ", id)
-                var param = { "UserID": event.sender.id, "BookID": id }
+                var param = { "UserID": userId, "BookID": id }
                 callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message + data.OrderID)
                     //testFunc(sender,"")
-                    sendTextMessage(sender, data.message + "Order Id:" + data.OrderID)
+                    sendTextMessage(sender, data.message + " Order No:" + data.OrderID)
                 });
             }
            
