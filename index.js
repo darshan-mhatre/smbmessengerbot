@@ -40,6 +40,7 @@ app.post('/webhook/', function (req, res) {
         if (event.message && event.message.text && sender) {
             let text = event.message.text
             console.log('sender Id: ', sender)
+
             if (sender != '805370696266097') {
                 var param = { "fbId": sender, "message": text.substring(0, 200) }
                 console.log('param Id: ', param)
@@ -65,7 +66,7 @@ app.post('/webhook/', function (req, res) {
                 var param = {  "fbId": sender }
                 console.log('param Id: ', param)
                 callApi("Book/CheckRegisteredUser", param, function (data) {                  // call to check registered user
-                    console.log('get response: ', data.isRegistered)
+                    console.log('isRegistered response: ', data.isRegistered)
                     isRegistered = data.isRegistered;
                 });
 
