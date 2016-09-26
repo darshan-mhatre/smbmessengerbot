@@ -48,6 +48,35 @@ app.post('/webhook/', function (req, res) {
                     console.log('get response: ', data.message)
                     console.log('request Id: ', data.requestId)
                 });
+
+                if (text == '#book') {
+
+
+                    var param = { "fbId": sender }
+                    console.log('param Id: ', param)
+                    callApi("Book/CheckRegisteredUser", param, function (data) {                  // call to check registered user
+                        console.log('isRegistered response: ', data.isRegistered)
+                        var isRegistered = data.isRegistered;
+
+                        if (data.isRegistered == 'true') {
+                            var apiRes;
+                            console.log('in get category response: ', data.isRegistered)
+                            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+                            callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
+                                console.log('get response of cat: ', data.message)
+                                sendFormat(sender, data.message)             // send response of api to display lis of category
+                            });
+                        }
+                        else {
+                            sendTextMessage(sender, "You are not registered for #banking")
+                        }
+                    });
+
+
+                }
+                else {
+                    sendTextMessage(sender, "Colud not recognised..Please enter valid #tag")
+                }
             }
             else
             {
@@ -60,35 +89,7 @@ app.post('/webhook/', function (req, res) {
             }
 
             console.log('Text Message: ', text)
-            if (text == '#book') {
-
             
-                var param = {  "fbId": sender }
-                console.log('param Id: ', param)
-                callApi("Book/CheckRegisteredUser", param, function (data) {                  // call to check registered user
-                    console.log('isRegistered response: ', data.isRegistered)
-                    var isRegistered = data.isRegistered;
-
-                    if (data.isRegistered == 'true') {
-                        var apiRes;
-                        console.log('in get category response: ', data.isRegistered)
-                        //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-                        callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
-                            console.log('get response of cat: ', data.message)
-                            sendFormat(sender, data.message)             // send response of api to display lis of category
-                        });
-                    }
-                    else {
-                        sendTextMessage(sender, "You are not registered for #banking")
-                    }
-                });
-
-                
-            }
-            else
-            {
-                sendTextMessage(sender, "Colud not recognised..Please enter valid #tag")
-            }
         }
 
         if (event.postback) {
