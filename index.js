@@ -59,21 +59,18 @@ app.post('/webhook/', function (req, res) {
 
                     var param = { "fbId": sender }
                     console.log('param Id: ', param)
-                    callApi("Book/CheckRegisteredUser", param, function (data) {                  // call to check registered user
-
+                    callApi("Book/CheckRegisteredUser", param, function (data) { 
                         console.log('isRegistered response: ', data.isRegistered)
-                        let isRegistered = data.isRegistered;
-
                         if (data.isRegistered == 'true') {
                             var apiRes;
                             console.log('in get category response: ', data.isRegistered)
                             //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-                            callApi("Book/GetBookCategories", "", function (data) {                  // call get catergory api
-                                console.log('get response of cat: ', data.message)
-                                sendFormat(sender, data.message)             // send response of api to display lis of category
+                            callApi("Book/GetBookCategories", "", function (data1) {                  // call get catergory api
+                                console.log('get response of cat: ', data1.message)
+                                sendFormat(sender, data1.message)             // send response of api to display lis of category
                             });
                         }
-                        else {
+                        else if (data.isRegistered == 'false') {
                             sendTextMessage(sender, "You are not registered for #banking")
                         }
                     });
