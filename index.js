@@ -39,6 +39,12 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id
         if (event.message && event.message.text && sender) {
             let text = event.message.text
+            var param = { "fbId": event.sender.id, "message": text }
+            callApi("Book/SavebotResponeMessage", "param", function (data) {                  // call to save user message
+                console.log('get response: ', data.message)
+                console.log('request Id: ', data.requestId)
+            });
+
             console.log('Text Message: ', text)
             if (text == '#book') {
                 var apiRes;
@@ -153,7 +159,7 @@ function testFunc(sender, text) {          // testFunction
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Welcome to M-Bank",
+                            "title": "Welcome to MyShop",
                             "image_url": "http://www.example.com/images/m-bank.png",
                             "buttons": [{
                                 "type": "account_link",
