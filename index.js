@@ -8,7 +8,7 @@ const app = express()
 //Example POST method invocation 
 var Client = require('node-rest-client').Client;
 var client = new Client();
-
+var requestId;
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -44,7 +44,7 @@ app.post('/webhook/', function (req, res) {
 
             let text = event.message.text
             console.log('sender Id: ', sender)
-            var requestId;
+           
             if (sender != '805370696266097') {
 
                 var param = { "fbId": sender, "message": text.substring(0, 200) }
@@ -110,9 +110,8 @@ app.post('/webhook/', function (req, res) {
             if (str.length > 7 && str.substring(0, 6) == "bookId") {
                 var id = str.slice(7);
                 console.log("slice id = ", id)
-                console.log("save order userId : ", event.sender.id)
                 var param = { "UserID": event.sender.id, "BookID": id }
-               console.log("Sve order param: ",param)
+                console.log("Sve order param: ",param)
                 callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message + data.OrderID)
                     //testFunc(sender,"")
