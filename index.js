@@ -106,7 +106,7 @@ app.post('/webhook/', function (req, res) {
                 console.log('request Id: ', data.requestId)
                 requestId = data.requestId;
             });
-
+            
             let text = JSON.stringify(event.postback) // {"payload":"1"}
             var txtype = event.postback;              // { payload: '1' }    
             var str = event.postback.payload;
@@ -116,23 +116,41 @@ app.post('/webhook/', function (req, res) {
             console.log("param = ", param)
             if (str.length > 7 && str.substring(0, 6) == "bookId") {
                 var id = str.slice(7);
+                var message
                 console.log("slice id = ", id)
                 var param = { "UserID": event.sender.id, "BookID": id }
-                console.log("Sve order param: ",param)
+                console.log("Save order param: ",param)
                 callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message + data.OrderID)
                     //testFunc(sender,"")
+                    var message = data.message + data.OrderID
                     sendTextMessage(sender, data.message + " Order No:" + data.OrderID)
+                });
+
+                var param = { "requestId": requestId, "fbId": event.sender.id, "message": message }
+                console.log('param Id: ', param)
+                callApi("Book/SavebotResponeMessage", param, function (data) {                  // call to save bot response message
+                    console.log('get response: ', data.message)
+                    console.log('response Id: ', data.response)
                 });
             }
            
             else
             {
+                var message
                 var param = { "BookCategoryID": str }
                 callApi("Book/GetBooks", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message)
                     //testFunc(sender,"")
+                    message = data.message
                     sendFormat(sender, data.message)
+                });
+
+                var param = { "requestId": requestId, "fbId": event.sender.id, "message": message }
+                console.log('param Id: ', param)
+                callApi("Book/SavebotResponeMessage", param, function (data) {                  // call to save bot response message
+                    console.log('get response: ', data.message)
+                    console.log('response Id: ', data.response)
                 });
             }
         }
