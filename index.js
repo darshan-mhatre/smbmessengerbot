@@ -100,6 +100,13 @@ app.post('/webhook/', function (req, res) {
 
         if (event.postback) {
            
+            var param = { "fbId": event.sender.id, "message": event.postback.payload }
+            callApi("Book/SaveUserMessage", param, function (data) {                  // call to save user message
+                console.log('get response: ', data.message)
+                console.log('request Id: ', data.requestId)
+                requestId = data.requestId;
+            });
+
             let text = JSON.stringify(event.postback) // {"payload":"1"}
             var txtype = event.postback;              // { payload: '1' }    
             var str = event.postback.payload;
