@@ -146,7 +146,7 @@ app.post('/webhook/', function (req, res) {
                     sendFormat(sender, data.message)
                 });
 
-                var param = { "requestId": requestId, "fbId": event.sender.id, "message": message }
+                var param = { "requestId": requestId, "fbId": event.sender.id, "message": "book list" }
                 console.log('param Id: ', param)
                 callApi("Book/SavebotResponeMessage", param, function (data) {                  // call to save bot response message
                     console.log('get response: ', data.message)
