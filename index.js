@@ -112,6 +112,7 @@ app.post('/webhook/', function (req, res) {
                 console.log("slice id = ", id)
                 console.log("save order userId : ", event.sender.id)
                 var param = { "UserID": event.sender.id, "BookID": id }
+               console.log("Sve order param: ",param)
                 callApi("Book/SaveBookOrder", param, function (data) {                  // call get book api
                     console.log('get response book: ', data.message + data.OrderID)
                     //testFunc(sender,"")
