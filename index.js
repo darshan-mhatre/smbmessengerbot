@@ -62,7 +62,8 @@ app.post('/webhook/', function (req, res) {
                     console.log('param Id: ', param)
                     callApi("Book/CheckRegisteredUser", param, function (data) { 
                         console.log('isRegistered response: ', data.isRegistered)
-                        userId = data.isRegistered;
+                        userId = data.userId;
+                        console.log('userId: ', userId)
                         if (data.isRegistered == true) {
                             var apiRes;
                             console.log('in get category response: ', data.isRegistered)
