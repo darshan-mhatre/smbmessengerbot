@@ -243,7 +243,8 @@ function testFunc(sender, text) {          // testFunction
     })
 }
 
-const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
+const token = "EAACaf1SOER0BABIZAg5nTDEnglzcd7oCZC5m4ZAo8AtcsTwELwrrdg8o2pARvJ8e3IbnLAqeRl8yd5ZBLbHXBX5Xtj7S51QQMK3rn1HMoQkN2EcCE5tBlpaEwe55lhZARO0XNmm4l8Tge5x20AqC9EQUZBZA28B5ZC5s1xfQEpI1nwZDZD"
+//const token = "EAABuCopCejMBAEEr1uprVLUSzvHCDLgGUrfZCyTy0qdQbs2yjdA2vDjkJUQmvm3EcCiW9fyRgJqs9KfTGZBnxn8ZA0ISyW1Athf7IboqZC8zzT59xOa169BNV0SmNKcOuHL2zDFotVMcw6IM6JQXEVOIt3WH4WgZBvURHd1PPzwZDZD"
 
 // Spin up the server
 app.listen(app.get('port'), function() {
