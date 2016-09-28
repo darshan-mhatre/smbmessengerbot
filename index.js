@@ -33,7 +33,9 @@ app.get('/webhook/', function (req, res) {
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
-    var userId=null;
+    var userId = null;
+    let text = JSON.stringify(messaging_events);
+    console.log('messging event: ', text);
     for (let i = 0; i < messaging_events.length; i++) {
 
         let event = req.body.entry[0].messaging[i]
